@@ -31,7 +31,7 @@ namespace Game.Board
                         if ((q + r + s) == 0)
                         {
                             Vector3 position = Vector3.left * r +
-                            (Vector3.left * 0.5f + Vector3.forward * 0.8f) * s;
+                            (Vector3.left * 0.5f + Vector3.forward * Mathf.Sqrt(3) / 2) * s;
 
                             GameObject go = GameObject.Instantiate(prefab, position, Quaternion.identity, transform);
                             go.name = r + ":" + s + ":" + q;
@@ -56,6 +56,7 @@ namespace Game.Board
 
         public List<Vector3Int> ComputePath(int size)
         {
+            Random.InitState(seed);
             Vector3Int[] cube_direction_vectors = {
                 new Vector3Int(1, 0, -1),
                 new Vector3Int(0, 1, -1)
