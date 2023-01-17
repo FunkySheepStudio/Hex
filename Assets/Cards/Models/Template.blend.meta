@@ -1,12 +1,14 @@
 fileFormatVersion: 2
-guid: 361fdab74381cf641bf765594755303f
+guid: 6973ef1df57abbb4299e675299348484
 ModelImporter:
   serializedVersion: 21300
-  internalIDToNameTable:
+  internalIDToNameTable: []
+  externalObjects:
   - first:
-      74: -623603649343465320
-    second: Scene
-  externalObjects: {}
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Card_Level
+    second: {fileID: 2100000, guid: e2e6df9c5ce73be47bcc5f35930298d7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
