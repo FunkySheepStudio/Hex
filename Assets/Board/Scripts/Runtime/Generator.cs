@@ -5,7 +5,10 @@ namespace Game.Board
 {
     public class Generator : MonoBehaviour
     {
-        public GameObject prefab;
+        public List<GameObject> starts;
+        public List<GameObject> trees;
+        public List<GameObject> rocks;
+        public List<GameObject> tiles;
         public int size;
         public int seed;
 
@@ -33,21 +36,32 @@ namespace Game.Board
                             Vector3 position = Vector3.left * r +
                             (Vector3.left * 0.5f + Vector3.forward * Mathf.Sqrt(3) / 2) * s;
 
-                            GameObject go = GameObject.Instantiate(prefab, position, Quaternion.identity, transform);
-                            go.name = r + ":" + s + ":" + q;
+                            GameObject go;
 
                             if (IsStartPosition(r, s, q, size))
                             {
-                                go.GetComponent<MeshRenderer>().material.color = Color.green;
-                                break;
+                                go = GameObject.Instantiate(starts[0], position, Quaternion.identity, transform);
+                                go.name = r + ":" + s + ":" + q;
+                                //go.GetComponent<MeshRenderer>().material.color = Color.green;
                             } else if (IsPath(r, s, q, path))
                             {
-                                go.GetComponent<MeshRenderer>().material.color = Color.blue;
-                                break;
+                                go = GameObject.Instantiate(tiles[0], position, Quaternion.identity, transform);
+                                go.name = r + ":" + s + ":" + q;
+                                //go.GetComponent<MeshRenderer>().material.color = Color.blue;
+                            } else if (IsRandom(r, s, q, size))
+                            {
+                                go = GameObject.Instantiate(trees[0], position, Quaternion.identity, transform);
+                                go.name = r + ":" + s + ":" + q;
+                                //go.GetComponent<MeshRenderer>().material.color = Color.red;
+                            } else
+                            {
+                                go = GameObject.Instantiate(rocks[0], position, Quaternion.identity, transform);
                             }
 
-                            if (IsRandom(r, s, q, size))
-                                go.GetComponent<MeshRenderer>().material.color = Color.red;
+                            int rotation = Random.Range(0, 6);
+                            go.transform.Rotate(Vector3.up * rotation * 60);
+
+                            go.name = r + ":" + s + ":" + q;
                         }
                     }
                 }
