@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: BackGround
+    second: {fileID: 2100000, guid: a208710ceb85c3840a06bc450b23af75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Card_Level
     second: {fileID: 2100000, guid: e2e6df9c5ce73be47bcc5f35930298d7, type: 2}
   materials:
