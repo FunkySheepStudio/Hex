@@ -29,7 +29,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Primary_Touch"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Value"",
                     ""id"": ""07fb1857-d674-47c8-9b69-749b04cd0264"",
                     ""expectedControlType"": ""Touch"",
                     ""processors"": """",
