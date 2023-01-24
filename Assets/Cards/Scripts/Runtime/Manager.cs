@@ -75,6 +75,14 @@ namespace Game.Cards
             return center - spawnDir * distance;
         }
 
+        public void Rotate(Vector2Int direction)
+        {
+            if (targetRotation == 0)
+            {
+                targetRotation = -direction.x * 360 / transform.childCount;
+            }
+        }
+
         public void RotateLeft()
         {
             if (targetRotation == 0)

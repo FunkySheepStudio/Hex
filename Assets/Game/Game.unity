@@ -187,6 +187,8 @@ GameObject:
   m_Component:
   - component: {fileID: 214948326}
   - component: {fileID: 214948327}
+  - component: {fileID: 214948328}
+  - component: {fileID: 214948329}
   m_Layer: 10
   m_Name: Cards
   m_TagString: Untagged
@@ -225,6 +227,47 @@ MonoBehaviour:
   template: {fileID: 5237939722870696022, guid: baa0ed14339970547be312e33d5a0968,
     type: 3}
   rotationSpeed: 200
+--- !u!114 &214948328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214948325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b673e1d95222145acae5b76d3adcba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swipeEvent: {fileID: 11400000, guid: 2b7ffd3c82299ad48aff74a058e3060f, type: 2}
+--- !u!114 &214948329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214948325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424446812be1ac04a96e3be95d5e4763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 2b7ffd3c82299ad48aff74a058e3060f, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 214948327}
+        m_TargetAssemblyTypeName: Game.Cards.Manager, Game
+        m_MethodName: Rotate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!1 &635406043
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,7 +399,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 866644043}
-  - component: {fileID: 866644044}
   - component: {fileID: 866644045}
   m_Layer: 0
   m_Name: Player
@@ -380,18 +422,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &866644044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 866644042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87b673e1d95222145acae5b76d3adcba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &866644045
 MonoBehaviour:
   m_ObjectHideFlags: 0
