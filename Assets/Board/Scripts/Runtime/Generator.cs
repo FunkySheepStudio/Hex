@@ -42,17 +42,14 @@ namespace Game.Board
                             {
                                 go = GameObject.Instantiate(starts[0], position, Quaternion.identity, transform);
                                 go.name = r + ":" + s + ":" + q;
-                                //go.GetComponent<MeshRenderer>().material.color = Color.green;
                             } else if (IsPath(r, s, q, path))
                             {
                                 go = GameObject.Instantiate(tiles[0], position, Quaternion.identity, transform);
                                 go.name = r + ":" + s + ":" + q;
-                                //go.GetComponent<MeshRenderer>().material.color = Color.blue;
                             } else if (IsRandom(r, s, q, size))
                             {
                                 go = GameObject.Instantiate(trees[0], position, Quaternion.identity, transform);
                                 go.name = r + ":" + s + ":" + q;
-                                //go.GetComponent<MeshRenderer>().material.color = Color.red;
                             } else
                             {
                                 go = GameObject.Instantiate(rocks[0], position, Quaternion.identity, transform);
@@ -142,6 +139,11 @@ namespace Game.Board
         {
             Random.InitState(seed + Mathf.Abs(r) + Mathf.Abs(s) + Mathf.Abs(q));
             return Random.Range(0, size) == 0;
+        }
+
+        public Vector3 GetPlayerStartPosition(int startPosition)
+        {
+            return Vector3.zero;
         }
     }
 }

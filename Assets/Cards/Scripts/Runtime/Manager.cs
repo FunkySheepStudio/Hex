@@ -8,6 +8,7 @@ namespace Game.Cards
         public Camera cam;
         public GameObject template;
         public float rotationSpeed = 200;
+        public List<Card> pool;
         List<GameObject> cards = new List<GameObject>();
         float targetRotation = 0;
         float currentRotation = 0;
@@ -16,7 +17,7 @@ namespace Game.Cards
         {
             for (int i = 0; i < 5; i++)
             {
-                AddCard();
+                AddCard(pool[i]);
             }
         }
 
@@ -40,12 +41,13 @@ namespace Game.Cards
             }
         }
 
-        void AddCard()
+        void AddCard(Card card)
         {
-            GameObject card = Instantiate(template, Vector3.zero, Quaternion.Euler(0, 180, 0),  transform);
+            GameObject cardGo = Instantiate(template, Vector3.zero, Quaternion.Euler(0, 180, 0),  transform);
 
-            card.GetComponent<MeshRenderer>().materials[0].SetFloat("_Level", Random.Range(0f, 0.6f));
-            cards.Add(card);
+            cardGo.GetComponent<MeshRenderer>().materials[0].SetFloat("_Level", card.level / 10f);
+            cardGo.transform.Find("Background").GetComponent<MeshRenderer>().materials[0].SetTexture("_background", card.background);
+            cards.Add(cardGo);
             Flush();
         }
 

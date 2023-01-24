@@ -32,7 +32,7 @@ namespace Game.Player.Inputs
                 } else if (activeTouch.phase == UnityEngine.InputSystem.TouchPhase.Moved)
                 {
                     touch0 += activeTouch.delta;
-                } else if (activeTouch.phase == UnityEngine.InputSystem.TouchPhase.Ended)
+                } else if (activeTouch.phase == UnityEngine.InputSystem.TouchPhase.Ended && touch0 != null)
                 {
                     GetCompassDirection(touch0.Value);
                     touch0 = null;
