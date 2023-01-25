@@ -25,6 +25,8 @@ namespace Game.Board
         {
             List<Vector3Int> path = ComputePath(size);
 
+            int owner = 0;
+
             for (int r = -size; r <= size; r++)
             {
                 for (int s = -size; s <= size; s++)
@@ -42,6 +44,8 @@ namespace Game.Board
                             {
                                 go = GameObject.Instantiate(starts[0], position, Quaternion.identity, transform);
                                 go.name = r + ":" + s + ":" + q;
+                                go.GetComponent<Tile>().owner = owner;
+                                owner += 1;
                             } else if (IsPath(r, s, q, path))
                             {
                                 go = GameObject.Instantiate(tiles[0], position, Quaternion.identity, transform);

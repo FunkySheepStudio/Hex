@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 5c0addc07c3185e42ae2f4bc005730a7,
@@ -62,13 +63,80 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5c0addc07c3185e42ae2f4bc005730a7,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5c0addc07c3185e42ae2f4bc005730a7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 370e7cfb82682844783526e58c81f0f3, type: 2}
     - target: {fileID: 919132149155446097, guid: 5c0addc07c3185e42ae2f4bc005730a7,
         type: 3}
       propertyPath: m_Name
       value: Rocks Green
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5c0addc07c3185e42ae2f4bc005730a7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8874105978754797451}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5c0addc07c3185e42ae2f4bc005730a7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7015623973031782768}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5c0addc07c3185e42ae2f4bc005730a7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7629178105645070408}
   m_SourcePrefab: {fileID: 100100000, guid: 5c0addc07c3185e42ae2f4bc005730a7, type: 3}
+--- !u!1 &1683541231424518822 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5c0addc07c3185e42ae2f4bc005730a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1989546522400065527}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-7015623973031782768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683541231424518822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779e44a634fbafa4ea826e64ed6ed2d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
+  selected: 0
+--- !u!64 &7629178105645070408
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683541231424518822}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4457607245505209530, guid: 5c0addc07c3185e42ae2f4bc005730a7, type: 3}
 --- !u!4 &2024072779765669916 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5c0addc07c3185e42ae2f4bc005730a7,
@@ -80,6 +148,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2024072779765669916}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 02a7de1671493b4459e1342868527c2f,
@@ -143,4 +212,13 @@ PrefabInstance:
       value: Rocks_Green
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02a7de1671493b4459e1342868527c2f, type: 3}
+--- !u!4 &8874105978754797451 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 02a7de1671493b4459e1342868527c2f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8983996413807749216}
+  m_PrefabAsset: {fileID: 0}
