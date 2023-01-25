@@ -1,3 +1,5 @@
+using Game.Player;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,8 +12,10 @@ namespace Game.Cards
         public float rotationSpeed = 200;
         public List<Card> pool;
         List<GameObject> cards = new List<GameObject>();
-        float targetRotation = 0;
+        public float targetRotation = 0;
         float currentRotation = 0;
+        int currentCardIndex = 0;
+        public GameObject currentCard = null;
 
         private void Start()
         {
@@ -19,6 +23,9 @@ namespace Game.Cards
             {
                 AddCard(pool[i]);
             }
+
+            currentCard = cards[0];
+            currentCardIndex = 0;
         }
 
         private void Update()
@@ -81,24 +88,21 @@ namespace Game.Cards
         {
             if (targetRotation == 0)
             {
+                currentCard.GetComponent<MeshRenderer>().material.SetInt("_Selected", 0);
                 targetRotation = -direction.x * 360 / transform.childCount;
+                currentCardIndex = ((currentCardIndex + direction.x % cards.Count) + cards.Count) % cards.Count;
+                currentCard = cards[currentCardIndex];
             }
         }
 
         public void RotateLeft()
         {
-            if (targetRotation == 0)
-            {
-                targetRotation = 360 / transform.childCount;
-            }
+            Rotate(Vector2Int.left);
         }
 
         public void RotateRight()
         {
-            if (targetRotation == 0)
-            {
-                targetRotation = -360 / transform.childCount;
-            }
+            Rotate(Vector2Int.right);
         }
 
         void Align()

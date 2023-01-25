@@ -44,6 +44,7 @@ namespace Game.Board
 
                     if (activeTouch.phase == UnityEngine.InputSystem.TouchPhase.Ended)
                     {
+                        lastTile = null;
                         tile.DeSelect();
                     }
                 }

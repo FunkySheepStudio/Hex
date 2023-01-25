@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &98854737
 Transform:
   m_ObjectHideFlags: 0
@@ -177,7 +177,7 @@ MonoBehaviour:
   - {fileID: 1683541231424518822, guid: 23f3757b2cf676140b4a5483d3f36b04, type: 3}
   tiles:
   - {fileID: 8577776808345259858, guid: 5960980751117464f8f8a6c1c7390ee4, type: 3}
-  size: 13
+  size: 15
   seed: 20
 --- !u!114 &98854739
 MonoBehaviour:
@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 214948327}
   - component: {fileID: 214948328}
   - component: {fileID: 214948329}
+  - component: {fileID: 214948330}
   m_Layer: 10
   m_Name: Cards
   m_TagString: Untagged
@@ -255,13 +256,14 @@ MonoBehaviour:
   cam: {fileID: 635406046}
   template: {fileID: 5237939722870696022, guid: baa0ed14339970547be312e33d5a0968,
     type: 3}
-  rotationSpeed: 200
+  rotationSpeed: 400
   pool:
   - {fileID: 11400000, guid: c84f18430f8c9c44abd55c3dbde851c3, type: 2}
   - {fileID: 11400000, guid: c84f18430f8c9c44abd55c3dbde851c3, type: 2}
   - {fileID: 11400000, guid: c84f18430f8c9c44abd55c3dbde851c3, type: 2}
   - {fileID: 11400000, guid: c84f18430f8c9c44abd55c3dbde851c3, type: 2}
   - {fileID: 11400000, guid: c84f18430f8c9c44abd55c3dbde851c3, type: 2}
+  currentCard: {fileID: 0}
 --- !u!114 &214948328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,79 +305,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
---- !u!1001 &605539406
-PrefabInstance:
+--- !u!114 &214948330
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 78720924540038318, guid: fce71cb13b227154692daeb8830ed27a,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 78720924540038318, guid: fce71cb13b227154692daeb8830ed27a,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 78720924540038318, guid: fce71cb13b227154692daeb8830ed27a,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 78720924540038318, guid: fce71cb13b227154692daeb8830ed27a,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 78720924540038318, guid: fce71cb13b227154692daeb8830ed27a,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 78720924540038318, guid: fce71cb13b227154692daeb8830ed27a,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.000000021855694
-      objectReference: {fileID: 0}
-    - target: {fileID: 78720924540038318, guid: fce71cb13b227154692daeb8830ed27a,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 78720924540038318, guid: fce71cb13b227154692daeb8830ed27a,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 78720924540038318, guid: fce71cb13b227154692daeb8830ed27a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 78720924540038318, guid: fce71cb13b227154692daeb8830ed27a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 78720924540038318, guid: fce71cb13b227154692daeb8830ed27a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 746609004664927764, guid: fce71cb13b227154692daeb8830ed27a,
-        type: 3}
-      propertyPath: m_Name
-      value: Tile Fog OF War
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fce71cb13b227154692daeb8830ed27a, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214948325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f7d46f56c54e3478cc602f3f0619ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 635406046}
+  manager: {fileID: 214948327}
 --- !u!1 &635406043
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,13 +330,14 @@ GameObject:
   - component: {fileID: 635406047}
   - component: {fileID: 635406046}
   - component: {fileID: 635406044}
+  - component: {fileID: 635406048}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &635406044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,7 +362,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -498,6 +442,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &635406048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635406043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: a6560a915ef98420e9faacc1c7438823, type: 2}
 --- !u!1 &860688693
 GameObject:
   m_ObjectHideFlags: 0
