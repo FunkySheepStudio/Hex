@@ -5,18 +5,20 @@ namespace Game.Player
 {
     public class Manager : MonoBehaviour
     {
-        public Game.Board.Generator generator;
+        public Game.Board.Generator boardGenerator;
+        public Game.Board.FogOfWar fogOfWar;
         public int id = 0;
 
         private void Start()
         {
-            generator.Generate();
+            boardGenerator.Generate();
+            fogOfWar.Generate(id);
             SetStartPosition();
         }
 
         public void SetStartPosition()
         {
-            Tile[] tiles = generator.GetComponentsInChildren<Game.Board.Tile>();
+            Tile[] tiles = boardGenerator.GetComponentsInChildren<Game.Board.Tile>();
             for (int i = 0; i < tiles.Length; i++)
             {
                 if (tiles[i].owner == id)
