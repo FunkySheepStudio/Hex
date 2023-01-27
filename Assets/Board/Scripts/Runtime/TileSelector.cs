@@ -7,8 +7,11 @@ namespace Game.Board
     public class TileSelector : MonoBehaviour
     {
         public Camera cam;
+        public FunkySheep.Events.GameObjectEvent selectedEvent;
+        public FunkySheep.Events.GameObjectEvent deSelectedEvent;
+        public FunkySheep.Events.GameObjectEvent stopSelectedEvent;
 
-        Tile lastTile;
+        GameObject lastTile;
 
         private void OnEnable()
         {
@@ -31,21 +34,20 @@ namespace Game.Board
 
                 if (Physics.Raycast(ray, out hit))
                 {
-                    Transform objectHit = hit.transform;
-                    Tile tile = objectHit.GetComponent<Tile>();
+                    GameObject tile = hit.transform.gameObject;
 
                     if (tile != lastTile)
                     {
                         if (lastTile != null)
-                            lastTile.DeSelect();
-                        tile.Select();
+                            deSelectedEvent.Raise(lastTile);
+                        selectedEvent.Raise(tile);
                         lastTile = tile;
                     }
 
                     if (activeTouch.phase == UnityEngine.InputSystem.TouchPhase.Ended)
                     {
                         lastTile = null;
-                        tile.DeSelect();
+                        stopSelectedEvent.Raise(tile);
                     }
                 }
             }

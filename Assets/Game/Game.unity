@@ -135,13 +135,14 @@ GameObject:
   - component: {fileID: 98854738}
   - component: {fileID: 98854739}
   - component: {fileID: 98854740}
+  - component: {fileID: 98854741}
   m_Layer: 11
   m_Name: Board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &98854737
 Transform:
   m_ObjectHideFlags: 0
@@ -177,7 +178,7 @@ MonoBehaviour:
   - {fileID: 1683541231424518822, guid: 23f3757b2cf676140b4a5483d3f36b04, type: 3}
   tiles:
   - {fileID: 8577776808345259858, guid: 5960980751117464f8f8a6c1c7390ee4, type: 3}
-  size: 15
+  size: 10
   seed: 20
 --- !u!114 &98854739
 MonoBehaviour:
@@ -192,6 +193,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 916752667}
+  selectedEvent: {fileID: 11400000, guid: 1b394ce30f7b7824cb6339049212b9c1, type: 2}
+  deSelectedEvent: {fileID: 11400000, guid: a66558e1b808cab43a7c9eb0b86238c9, type: 2}
+  stopSelectedEvent: {fileID: 11400000, guid: f867c45838773e34caad0c42bf97d83d, type: 2}
 --- !u!114 &98854740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +210,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fogOfWarPrefab: {fileID: 746609004664927764, guid: fce71cb13b227154692daeb8830ed27a,
     type: 3}
+--- !u!114 &98854741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98854736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3e4ffde1cc0d434babda442e9a2f1bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 4866351619297460247, guid: 69c040f24c6a21f4988cb0fbc2893909, type: 3}
 --- !u!1 &214948325
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,7 +355,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &635406044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,8 +540,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 860688693}
-  m_LocalRotation: {x: 0.11326596, y: -0.6979762, z: 0.11326595, w: 0.6979763}
-  m_LocalPosition: {x: 29.999998, y: 10, z: -0.0000017881393}
+  m_LocalRotation: {x: 0.06967663, y: -0.7036655, z: 0.06967662, w: 0.70366555}
+  m_LocalPosition: {x: 14.999999, y: 3, z: -0.0000008940697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -618,8 +635,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 916752665}
-  m_LocalRotation: {x: 0.11326596, y: -0.6979762, z: 0.11326595, w: 0.6979763}
-  m_LocalPosition: {x: 29.999998, y: 10, z: -0.0000017881393}
+  m_LocalRotation: {x: 0.06967663, y: -0.7036655, z: 0.06967662, w: 0.70366555}
+  m_LocalPosition: {x: 14.999999, y: 3, z: -0.0000008940697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -768,7 +785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 10, z: -30}
+  m_FollowOffset: {x: 0, y: 3, z: -15}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -838,6 +855,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 663ac8cda2f73984eb0fb1fb0c023ccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turn: 0
+  turnTime: 1
+  spawner: {fileID: 98854741}
 --- !u!4 &1200324863
 Transform:
   m_ObjectHideFlags: 0
@@ -885,6 +905,14 @@ MonoBehaviour:
   boardGenerator: {fileID: 98854738}
   fogOfWar: {fileID: 98854740}
   id: 0
+  colors:
+  - {r: 1, g: 0.38364774, b: 0.38364774, a: 0}
+  - {r: 0.45437473, g: 1, b: 0.3843137, a: 0}
+  - {r: 0.3843137, g: 1, b: 0.9412064, a: 0}
+  - {r: 0.3843137, g: 0.47724125, b: 1, a: 0}
+  - {r: 1, g: 0.3843137, b: 0.9726951, a: 0}
+  - {r: 1, g: 0.7983608, b: 0.3843137, a: 0}
+  action: 0
 --- !u!4 &1713889829
 Transform:
   m_ObjectHideFlags: 0

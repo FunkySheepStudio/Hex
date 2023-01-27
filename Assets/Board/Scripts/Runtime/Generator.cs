@@ -61,8 +61,10 @@ namespace Game.Board
 
                             int rotation = Random.Range(0, 6);
                             go.transform.Rotate(Vector3.up * rotation * 60);
-
                             go.name = r + ":" + s + ":" + q;
+
+                            Tile tile = go.GetComponent<Tile>();
+                            tile.position = new Vector3Int(r, s, q);
                         }
                     }
                 }

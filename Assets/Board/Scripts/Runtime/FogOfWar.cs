@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Board
@@ -12,7 +13,7 @@ namespace Game.Board
                 Tile tile = transform.GetChild(i).GetComponent<Tile>();
                 if (tile.owner != playerId)
                 {
-                    GameObject.Instantiate(fogOfWarPrefab, tile.transform.position + Vector3.up, Quaternion.identity, transform.GetChild(i).transform);
+                    tile.fogOfWar = GameObject.Instantiate(fogOfWarPrefab, tile.transform.position + Vector3.up, Quaternion.identity, transform.GetChild(i).transform);
                 }
             }
         }
