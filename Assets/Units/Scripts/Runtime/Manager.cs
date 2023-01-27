@@ -66,14 +66,28 @@ namespace Game.Units
 
         public void OnSelectStopped(GameObject tile)
         {
-            transform.parent.GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 0);
-
-            for (int i = 0; i < neighbors.Count; i++)
+            if (selected)
             {
-                neighbors[i].GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 0);
+                transform.parent.GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 0);
+
+                for (int i = 0; i < neighbors.Count; i++)
+                {
+                    neighbors[i].GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 0);
+                }
+                neighbors.Clear();
+                selected = false;
+                Move(tile);
             }
-            neighbors.Clear();
-            selected = false;
+        }
+
+        void Move(GameObject tileGo)
+        {
+            transform.parent.GetComponent<Tile>().unitManager = null;
+
+            transform.parent = tileGo.transform;
+            transform.position = tileGo.transform.position;
+            tileGo.GetComponent<Tile>().owner = Player.Manager.Instance.id;
+            tileGo.GetComponent<Tile>().unitManager = this;
         }
     }
 }

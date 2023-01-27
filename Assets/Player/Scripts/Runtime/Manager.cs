@@ -4,19 +4,12 @@ using UnityEngine;
 
 namespace Game.Player
 {
-    public enum Action
-    {
-        None,
-        MovingUnit
-    }
-
     public class Manager : FunkySheep.Types.Singleton<Manager>
     {
         public Game.Board.Generator boardGenerator;
         public Game.Board.FogOfWar fogOfWar;
         public int id = 0;
         public List<Color> colors;
-        public Action action = Action.None;
 
         private void Start()
         {

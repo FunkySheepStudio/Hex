@@ -31,8 +31,9 @@ namespace Game.Board
 
                 RaycastHit hit;
                 Ray ray = cam.ScreenPointToRay(activeTouch.screenPosition);
+                LayerMask mask = LayerMask.GetMask("Tiles");
 
-                if (Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
                 {
                     GameObject tile = hit.transform.gameObject;
 
