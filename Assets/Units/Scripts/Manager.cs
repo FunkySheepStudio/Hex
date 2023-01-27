@@ -1,4 +1,5 @@
 using Game.Board;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ namespace Game.Units
                 Game.Board.Tile tile = tileGo.GetComponent<Tile>();
                 if (tile.owner == Player.Manager.Instance.id)
                 {
+                    Player.Manager.Instance.Move(tileGo.transform.position);
                     transform.parent.GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 1);
                     transform.parent.GetComponent<MeshRenderer>().materials[1].SetColor("_Color", Player.Manager.Instance.Color());
 
@@ -64,7 +66,7 @@ namespace Game.Units
             }
         }
 
-        public void OnSelectStopped(GameObject tile)
+        public void OnSelectStopped(GameObject tileGo)
         {
             if (selected)
             {
@@ -73,10 +75,13 @@ namespace Game.Units
                 for (int i = 0; i < neighbors.Count; i++)
                 {
                     neighbors[i].GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 0);
+                    if (neighbors[i].gameObject == tileGo)
+                    {
+                        Move(tileGo);
+                    }
                 }
                 neighbors.Clear();
                 selected = false;
-                Move(tile);
             }
         }
 
@@ -88,6 +93,7 @@ namespace Game.Units
             transform.position = tileGo.transform.position;
             tileGo.GetComponent<Tile>().owner = Player.Manager.Instance.id;
             tileGo.GetComponent<Tile>().unitManager = this;
+            tileGo.GetComponent<Tile>().RemoveFogOfWar();
         }
     }
 }

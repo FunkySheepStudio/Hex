@@ -1,4 +1,3 @@
-using log4net.Util;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,6 +34,7 @@ namespace Game.Board
             for (int i = 0; i < tiles.Length; i++)
             {
                 if (tiles[i].gameObject != gameObject &&
+                    tiles[i].unitManager == null &&
                     Mathf.Abs(position.x - tiles[i].position.x) <= range &&
                     Mathf.Abs(position.y - tiles[i].position.y) <= range &&
                     Mathf.Abs(position.z - tiles[i].position.z) <= range
