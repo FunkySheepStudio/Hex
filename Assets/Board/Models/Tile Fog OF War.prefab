@@ -23,6 +23,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile Fog OF War
       objectReference: {fileID: 0}
+    - target: {fileID: 8577776808345259858, guid: 5960980751117464f8f8a6c1c7390ee4,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8953633401654515176, guid: 5960980751117464f8f8a6c1c7390ee4,
         type: 3}
       propertyPath: m_RootOrder
