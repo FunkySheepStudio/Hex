@@ -27,7 +27,7 @@ namespace Game.Units
                 {
                     Player.Manager.Instance.Move(tileGo.transform.position);
                     transform.parent.GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 1);
-                    transform.parent.GetComponent<MeshRenderer>().materials[1].SetColor("_Color", Player.Manager.Instance.Color());
+                    transform.parent.GetComponent<MeshRenderer>().materials[1].SetColor("_Color", Color.red);
 
                     neighbors = tile.FindNeighbors(moveRange);
 
@@ -70,11 +70,23 @@ namespace Game.Units
         {
             if (selected)
             {
-                transform.parent.GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 0);
+                if (transform.parent.GetComponent<Tile>().owner == Player.Manager.Instance.id)
+                {
+                    transform.parent.GetComponent<MeshRenderer>().materials[1].color = Player.Manager.Instance.Color();
+                } else
+                {
+                    transform.parent.GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 0);
+                }
 
                 for (int i = 0; i < neighbors.Count; i++)
                 {
-                    neighbors[i].GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 0);
+                    if (neighbors[i].GetComponent<Tile>().owner != -1)
+                    {
+                        neighbors[i].GetComponent<MeshRenderer>().materials[1].color = Player.Manager.Instance.Color(neighbors[i].GetComponent<Tile>().owner);
+                    } else
+                    {
+                        neighbors[i].GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 0);
+                    }
                     if (neighbors[i].gameObject == tileGo)
                     {
                         Move(tileGo);
@@ -92,7 +104,8 @@ namespace Game.Units
             transform.parent = tileGo.transform;
             transform.position = tileGo.transform.position;
             tileGo.GetComponent<Tile>().owner = Player.Manager.Instance.id;
-            tileGo.GetComponent<MeshRenderer>().material.color = Player.Manager.Instance.Color();
+            tileGo.GetComponent<MeshRenderer>().materials[1].color = Player.Manager.Instance.Color();
+            tileGo.GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 1);
             tileGo.GetComponent<Tile>().unitManager = this;
             tileGo.GetComponent<Tile>().RemoveFogOfWar();
         }
