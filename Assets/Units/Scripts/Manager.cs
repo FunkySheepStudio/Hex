@@ -92,6 +92,7 @@ namespace Game.Units
             transform.parent = tileGo.transform;
             transform.position = tileGo.transform.position;
             tileGo.GetComponent<Tile>().owner = Player.Manager.Instance.id;
+            tileGo.GetComponent<MeshRenderer>().material.color = Player.Manager.Instance.Color();
             tileGo.GetComponent<Tile>().unitManager = this;
             tileGo.GetComponent<Tile>().RemoveFogOfWar();
         }

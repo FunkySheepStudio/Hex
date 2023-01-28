@@ -35,6 +35,8 @@ namespace Game.Board
             {
                 if (tiles[i].gameObject != gameObject &&
                     tiles[i].unitManager == null &&
+                    tiles[i].type != TileType.Rock &&
+                    tiles[i].type != TileType.Start &&
                     Mathf.Abs(position.x - tiles[i].position.x) <= range &&
                     Mathf.Abs(position.y - tiles[i].position.y) <= range &&
                     Mathf.Abs(position.z - tiles[i].position.z) <= range
