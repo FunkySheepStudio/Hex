@@ -2,24 +2,26 @@ using Game.Board;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Unity.Netcode;
 
 namespace Game.Player
 {
-    public class Manager : FunkySheep.Types.Singleton<Manager>
+    public class Manager : NetworkBehaviour
     {
-        public Game.Board.Generator boardGenerator;
-        public Game.Board.FogOfWar fogOfWar;
         public int id = 0;
         public List<Color> colors;
         public CinemachineVirtualCamera cam;
         bool move = false;
         Vector3 moveTarget;
 
+        public void Awake()
+        {
+            id = (int)Unity.Netcode.NetworkManager.Singleton.LocalClientId;
+        }
+
         private void Start()
         {
-            boardGenerator.Generate();
-            fogOfWar.Generate(id);
-            SetStartPosition();
+            NetworkManager.SceneManager.LoadScene("Game/Game", UnityEngine.SceneManagement.LoadSceneMode.Additive);
         }
 
         private void Update()
@@ -29,18 +31,6 @@ namespace Game.Player
                 transform.position = Vector3.Lerp(transform.position, moveTarget, Time.deltaTime);
                 if (transform.position == moveTarget)
                     move = false;
-            }
-        }
-
-        public void SetStartPosition()
-        {
-            Tile[] tiles = boardGenerator.GetComponentsInChildren<Game.Board.Tile>();
-            for (int i = 0; i < tiles.Length; i++)
-            {
-                if (tiles[i].owner == id)
-                {
-                    transform.position = tiles[i].transform.position;
-                }
             }
         }
 

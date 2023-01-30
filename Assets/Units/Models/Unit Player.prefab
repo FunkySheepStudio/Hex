@@ -75,7 +75,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47cf827f40e245a42b302a35ac4166c8,
         type: 3}
       insertIndex: 1
+      addedObject: {fileID: 7513089277317109546}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47cf827f40e245a42b302a35ac4166c8,
+        type: 3}
+      insertIndex: 2
       addedObject: {fileID: 376403089747689639}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47cf827f40e245a42b302a35ac4166c8,
+        type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 3032488127655143575}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47cf827f40e245a42b302a35ac4166c8,
         type: 3}
       insertIndex: -1
@@ -95,6 +103,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5713283222735060294}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7513089277317109546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4866351619297460247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!114 &376403089747689639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,6 +133,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: 0
   moveRange: 1
+--- !u!114 &3032488127655143575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4866351619297460247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  InLocalSpace: 0
+  Interpolate: 1
 --- !u!114 &2179814291645137306
 MonoBehaviour:
   m_ObjectHideFlags: 0

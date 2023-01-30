@@ -1,23 +1,23 @@
+using Game.Board;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Game
 {
-    public class Manager : MonoBehaviour
+    public class Manager : NetworkBehaviour
     {
-        public int turn = 0;
-        public float turnTime = 1;
-        public Game.Board.Spawner spawner;
-        float elapsedTime = 0;
-
+        public NetworkVariable<int> playerCount = new NetworkVariable<int>();
+        public NetworkVariable<bool> started = new NetworkVariable<bool>();
+        public GameObject boardPrefab;
 
         private void Update()
         {
-            elapsedTime += Time.deltaTime;
-            if (elapsedTime >= turnTime)
+            if ((IsServer || IsHost) && !started.Value && (int)Unity.Netcode.NetworkManager.Singleton.ConnectedClients.Count == playerCount.Value)
             {
-                elapsedTime = 0;
-                turn += 1;
-                spawner.Spawn();
+                //Unity.Netcode.NetworkManager.Singleton.SceneManager.LoadScene("Game/Game", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+                GameObject board = GameObject.Instantiate(boardPrefab);
+                board.GetComponent<NetworkObject>().Spawn();
+                started.Value = true;
             }
         }
     }

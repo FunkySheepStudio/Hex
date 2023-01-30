@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Game.Board
@@ -51,7 +52,7 @@ namespace Game.Board
 
         public void RemoveFogOfWar()
         {
-            if (owner == Player.Manager.Instance.id)
+            if (owner == NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().id)
             {
                 List<Tile> tiles = FindNeighbors(2);
                 for (int i = 0; i < tiles.Count; i++)

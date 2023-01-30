@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2945670118561252943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2945670118561252942}
+  - component: {fileID: 2945670118561252937}
+  - component: {fileID: 2945670118561252941}
+  - component: {fileID: 2945670118561252939}
+  - component: {fileID: 2945670118561252938}
+  m_Layer: 11
+  m_Name: Board
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2945670118561252942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2945670118561252943}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2945670118561252937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2945670118561252943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!114 &2945670118561252941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2945670118561252943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59455263becbb3b49aa6e2f37f856f17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  starts:
+  - {fileID: 649044987364365999, guid: be7a16bc8cf1b784fa4b080be47dbf82, type: 3}
+  trees:
+  - {fileID: 3319055808226684447, guid: a24e88d279ad192429363328beff6b45, type: 3}
+  rocks:
+  - {fileID: 1683541231424518822, guid: 23f3757b2cf676140b4a5483d3f36b04, type: 3}
+  tiles:
+  - {fileID: 8577776808345259858, guid: 5960980751117464f8f8a6c1c7390ee4, type: 3}
+  size: 5
+  seed:
+    m_InternalValue: 0
+--- !u!114 &2945670118561252939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2945670118561252943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a3b483a516c9ac4eaac9dbcafd0d667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fogOfWarPrefab: {fileID: 746609004664927764, guid: fce71cb13b227154692daeb8830ed27a,
+    type: 3}
+--- !u!114 &2945670118561252938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2945670118561252943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3e4ffde1cc0d434babda442e9a2f1bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 4866351619297460247, guid: 69c040f24c6a21f4988cb0fbc2893909, type: 3}
+  turn:
+    m_InternalValue: 0
+  turnTime: 5

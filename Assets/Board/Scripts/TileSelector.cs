@@ -6,12 +6,17 @@ namespace Game.Board
 {
     public class TileSelector : MonoBehaviour
     {
-        public Camera cam;
+        Camera cam;
         public FunkySheep.Events.GameObjectEvent selectedEvent;
         public FunkySheep.Events.GameObjectEvent deSelectedEvent;
         public FunkySheep.Events.GameObjectEvent stopSelectedEvent;
 
         GameObject lastTile;
+
+        private void Awake()
+        {
+            cam = GetComponent<Camera>();
+        }
 
         private void OnEnable()
         {

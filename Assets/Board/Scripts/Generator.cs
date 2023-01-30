@@ -1,16 +1,35 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Game.Board
 {
-    public class Generator : MonoBehaviour
+    public class Generator : NetworkBehaviour
     {
         public List<GameObject> starts;
         public List<GameObject> trees;
         public List<GameObject> rocks;
         public List<GameObject> tiles;
         public int size;
-        public int seed;
+        public NetworkVariable<int> seed = new NetworkVariable<int>();
+
+        private void Awake()
+        {
+            if (IsServer)
+            {
+                seed.Value = Random.Range(0, 1000);
+            }
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            if (IsServer)
+            {
+                Generate();
+                GetComponent<FogOfWar>().Generate(NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().id);
+            }
+            SetStartPosition();
+        }
 
         public void Clear()
         {
@@ -65,6 +84,9 @@ namespace Game.Board
 
                             Tile tile = go.GetComponent<Tile>();
                             tile.position = new Vector3Int(r, s, q);
+
+                            go.GetComponent<NetworkObject>().Spawn();
+                            go.GetComponent<NetworkObject>().TrySetParent(gameObject);
                         }
                     }
                 }
@@ -73,7 +95,7 @@ namespace Game.Board
 
         public List<Vector3Int> ComputePath(int size)
         {
-            Random.InitState(seed);
+            Random.InitState(seed.Value);
             Vector3Int[] cube_direction_vectors = {
                 new Vector3Int(1, 0, -1),
                 new Vector3Int(0, 1, -1)
@@ -137,19 +159,31 @@ namespace Game.Board
 
         public bool IsRandom(int r, int s, int q, int size)
         {
-            Random.InitState(seed + (Mathf.Abs(r) * Mathf.Abs(s) * Mathf.Abs(q)));
+            Random.InitState(seed.Value + (Mathf.Abs(r) * Mathf.Abs(s) * Mathf.Abs(q)));
             return Random.Range(0, size) >= size / 2;
         }
 
         public bool IsRandomCircles(int r, int s, int q, int size)
         {
-            Random.InitState(seed + Mathf.Abs(r) + Mathf.Abs(s) + Mathf.Abs(q));
+            Random.InitState(seed.Value + Mathf.Abs(r) + Mathf.Abs(s) + Mathf.Abs(q));
             return Random.Range(0, size) == 0;
         }
 
         public Vector3 GetPlayerStartPosition(int startPosition)
         {
             return Vector3.zero;
+        }
+
+        public void SetStartPosition()
+        {
+            Tile[] tiles = GetComponentsInChildren<Game.Board.Tile>();
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                if (tiles[i].owner == NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().id)
+                {
+                    NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().transform.position = tiles[i].transform.position;
+                }
+            }
         }
     }
 }
