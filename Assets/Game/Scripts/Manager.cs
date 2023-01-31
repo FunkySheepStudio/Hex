@@ -14,7 +14,7 @@ namespace Game
         {
             if ((IsServer || IsHost) && !started.Value && (int)Unity.Netcode.NetworkManager.Singleton.ConnectedClients.Count == playerCount.Value)
             {
-                //Unity.Netcode.NetworkManager.Singleton.SceneManager.LoadScene("Game/Game", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+                Unity.Netcode.NetworkManager.Singleton.SceneManager.LoadScene("Game/Game", UnityEngine.SceneManagement.LoadSceneMode.Additive);
                 GameObject board = GameObject.Instantiate(boardPrefab);
                 board.GetComponent<NetworkObject>().Spawn();
                 started.Value = true;

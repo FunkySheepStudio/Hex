@@ -5,16 +5,18 @@ using UnityEngine;
 
 namespace Game.Units
 {
-    public class Manager : MonoBehaviour
+    public class Manager : NetworkBehaviour
     {
-        public int owner;
-        public int moveRange = 1;
+        public NetworkVariable<int> moveRange = new NetworkVariable<int>(1);
         List<Tile> neighbors = new List<Tile>();
         bool selected = false;
 
-        private void Start()
+        [ClientRpc]
+        public void SetOwerClientRpc()
         {
-            GetComponent<MeshRenderer>().material.color = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Color(owner);
+            Tile tile = transform.parent.GetComponent<Game.Board.Tile>();
+            tile.unitManager = this;
+            GetComponent<MeshRenderer>().material.color = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Color(OwnerClientId);
             transform.parent.GetComponent<Game.Board.Tile>().RemoveFogOfWar();
         }
 
@@ -23,13 +25,13 @@ namespace Game.Units
             if (transform.parent.gameObject == tileGo)
             {
                 Game.Board.Tile tile = tileGo.GetComponent<Tile>();
-                if (tile.owner == NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().id)
+                if (tile.GetComponent<NetworkBehaviour>().OwnerClientId == NetworkManager.Singleton.LocalClient.PlayerObject.OwnerClientId)
                 {
                     NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Move(tileGo.transform.position);
                     transform.parent.GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 1);
                     transform.parent.GetComponent<MeshRenderer>().materials[1].SetColor("_Color", Color.red);
 
-                    neighbors = tile.FindNeighbors(moveRange);
+                    neighbors = tile.FindNeighbors(moveRange.Value);
 
                     for (int i = 0; i < neighbors.Count; i++)
                     {
@@ -70,7 +72,7 @@ namespace Game.Units
         {
             if (selected)
             {
-                if (transform.parent.GetComponent<Tile>().owner == NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().id)
+                if (transform.parent.GetComponent<NetworkObject>().OwnerClientId == NetworkManager.Singleton.LocalClient.ClientId)
                 {
                     transform.parent.GetComponent<MeshRenderer>().materials[1].color = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Color();
                 } else
@@ -80,16 +82,16 @@ namespace Game.Units
 
                 for (int i = 0; i < neighbors.Count; i++)
                 {
-                    if (neighbors[i].GetComponent<Tile>().owner != -1)
+                    if (neighbors[i].GetComponent<NetworkObject>().IsOwnedByServer)
                     {
-                        neighbors[i].GetComponent<MeshRenderer>().materials[1].color = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Color(neighbors[i].GetComponent<Tile>().owner);
+                        neighbors[i].GetComponent<MeshRenderer>().materials[1].color = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Color(neighbors[i].GetComponent<NetworkObject>().OwnerClientId);
                     } else
                     {
                         neighbors[i].GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 0);
                     }
                     if (neighbors[i].gameObject == tileGo)
                     {
-                        Move(tileGo);
+                        MoveServerRpc(tileGo.GetComponent<NetworkBehaviour>());
                     }
                 }
                 neighbors.Clear();
@@ -97,17 +99,20 @@ namespace Game.Units
             }
         }
 
-        void Move(GameObject tileGo)
+        [ServerRpc]
+        void MoveServerRpc(NetworkBehaviourReference tileGoRef)
         {
             transform.parent.GetComponent<Tile>().unitManager = null;
-
-            transform.parent = tileGo.transform;
-            transform.position = tileGo.transform.position;
-            tileGo.GetComponent<Tile>().owner = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().id;
-            tileGo.GetComponent<MeshRenderer>().materials[1].color = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Color();
-            tileGo.GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 1);
-            tileGo.GetComponent<Tile>().unitManager = this;
-            tileGo.GetComponent<Tile>().RemoveFogOfWar();
+            if (tileGoRef.TryGet<NetworkBehaviour>(out NetworkBehaviour tileGo))
+            {
+                transform.parent = tileGo.transform;
+                transform.position = tileGo.transform.position;
+                tileGo.GetComponent<NetworkObject>().ChangeOwnership(OwnerClientId);
+                tileGo.GetComponent<MeshRenderer>().materials[1].color = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Color();
+                tileGo.GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 1);
+                tileGo.GetComponent<Tile>().unitManager = this;
+                tileGo.GetComponent<Tile>().RemoveFogOfWar();
+            }
         }
     }
 }

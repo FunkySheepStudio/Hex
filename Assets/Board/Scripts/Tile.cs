@@ -13,19 +13,13 @@ namespace Game.Board
     }
 
     [AddComponentMenu("Game/Tiles/Tile")]
-    public class Tile : MonoBehaviour
+    public class Tile : NetworkBehaviour
     {
-        public Vector3Int position;
-        public TileType type = TileType.Path;
+        public NetworkVariable<Vector3Int> position = new NetworkVariable<Vector3Int>();
+        public NetworkVariable<TileType> type = new NetworkVariable<TileType>();
         public bool selected = false;
-        public int owner = -1;
         public Game.Units.Manager unitManager;
         public GameObject fogOfWar;
-
-        private void Awake()
-        {
-            owner = -1;
-        }
 
         public List<Tile> FindNeighbors(int range = 1)
         {
@@ -36,11 +30,11 @@ namespace Game.Board
             {
                 if (tiles[i].gameObject != gameObject &&
                     tiles[i].unitManager == null &&
-                    tiles[i].type != TileType.Rock &&
-                    tiles[i].type != TileType.Start &&
-                    Mathf.Abs(position.x - tiles[i].position.x) <= range &&
-                    Mathf.Abs(position.y - tiles[i].position.y) <= range &&
-                    Mathf.Abs(position.z - tiles[i].position.z) <= range
+                    tiles[i].type.Value != TileType.Rock &&
+                    tiles[i].type.Value != TileType.Start &&
+                    Mathf.Abs(position.Value.x - tiles[i].position.Value.x) <= range &&
+                    Mathf.Abs(position.Value.y - tiles[i].position.Value.y) <= range &&
+                    Mathf.Abs(position.Value.z - tiles[i].position.Value.z) <= range
                 )
                 {
                     neighbors.Add(tiles[i]);
@@ -52,7 +46,7 @@ namespace Game.Board
 
         public void RemoveFogOfWar()
         {
-            if (owner == NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().id)
+            if (OwnerClientId == NetworkManager.Singleton.LocalClient.ClientId)
             {
                 List<Tile> tiles = FindNeighbors(2);
                 for (int i = 0; i < tiles.Count; i++)

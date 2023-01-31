@@ -8,21 +8,9 @@ namespace Game.Player
 {
     public class Manager : NetworkBehaviour
     {
-        public int id = 0;
         public List<Color> colors;
-        public CinemachineVirtualCamera cam;
         bool move = false;
         Vector3 moveTarget;
-
-        public void Awake()
-        {
-            id = (int)Unity.Netcode.NetworkManager.Singleton.LocalClientId;
-        }
-
-        private void Start()
-        {
-            NetworkManager.SceneManager.LoadScene("Game/Game", UnityEngine.SceneManagement.LoadSceneMode.Additive);
-        }
 
         private void Update()
         {
@@ -36,12 +24,12 @@ namespace Game.Player
 
         public Color Color()
         {
-            return colors[id];
+            return colors[(int)OwnerClientId];
         }
 
-        public Color Color(int owner)
+        public Color Color(ulong owner)
         {
-            return colors[owner];
+            return colors[(int)owner];
         }
 
         public void Move(Vector3 target)

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Game.Board
 {
@@ -26,9 +27,9 @@ namespace Game.Board
             if (IsServer)
             {
                 Generate();
-                GetComponent<FogOfWar>().Generate(NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().id);
+                GetComponent<FogOfWar>().Generate(NetworkManager.Singleton.LocalClient.ClientId);
+                SetStartPosition();
             }
-            SetStartPosition();
         }
 
         public void Clear()
@@ -44,7 +45,7 @@ namespace Game.Board
         {
             List<Vector3Int> path = ComputePath(size);
 
-            int owner = 0;
+            ulong owner = 0;
 
             for (int r = -size; r <= size; r++)
             {
@@ -56,41 +57,50 @@ namespace Game.Board
                         {
                             Vector3 position = Vector3.left * r +
                             (Vector3.left * 0.5f + Vector3.forward * Mathf.Sqrt(3) / 2) * s;
+                            Vector3Int tilePosition = new Vector3Int(r, s, q);
 
-                            GameObject go;
+                            Tile tile;
 
                             if (IsStartPosition(r, s, q, size))
                             {
-                                go = GameObject.Instantiate(starts[0], position, Quaternion.identity, transform);
-                                go.name = r + ":" + s + ":" + q;
-                                go.GetComponent<Tile>().owner = owner;
+                                tile = Spawn(starts[0], position, tilePosition).GetComponent<Tile>();
+                                tile.GetComponent<NetworkObject>().ChangeOwnership(owner);
+                                tile.type.Value = TileType.Start;
                                 owner += 1;
                             } else if (IsPath(r, s, q, path))
                             {
-                                go = GameObject.Instantiate(tiles[0], position, Quaternion.identity, transform);
-                                go.name = r + ":" + s + ":" + q;
+                                tile = Spawn(tiles[0], position, tilePosition).GetComponent<Tile>();
+                                tile.type.Value = TileType.Path;
                             } else if (IsRandom(r, s, q, size))
                             {
-                                go = GameObject.Instantiate(trees[0], position, Quaternion.identity, transform);
-                                go.name = r + ":" + s + ":" + q;
+                                tile = Spawn(trees[0], position, tilePosition).GetComponent<Tile>();
+                                tile.type.Value = TileType.Tree;
                             } else
                             {
-                                go = GameObject.Instantiate(rocks[0], position, Quaternion.identity, transform);
+                                tile = Spawn(rocks[0], position, tilePosition).GetComponent<Tile>();
+                                tile.type.Value = TileType.Rock;
                             }
 
-                            int rotation = Random.Range(0, 6);
-                            go.transform.Rotate(Vector3.up * rotation * 60);
-                            go.name = r + ":" + s + ":" + q;
-
-                            Tile tile = go.GetComponent<Tile>();
-                            tile.position = new Vector3Int(r, s, q);
-
-                            go.GetComponent<NetworkObject>().Spawn();
-                            go.GetComponent<NetworkObject>().TrySetParent(gameObject);
+                            tile.position.Value = tilePosition;
                         }
                     }
                 }
             }
+        }
+
+        GameObject Spawn(GameObject prefab, Vector3 position, Vector3Int tilePosition)
+        {
+            GameObject go;
+            go = GameObject.Instantiate(prefab, position, Quaternion.identity, transform);
+            go.name = tilePosition.x + ":" + tilePosition.y + ":" + tilePosition.z;
+
+            int rotation = Random.Range(0, 6);
+            go.transform.Rotate(Vector3.up * rotation * 60);
+
+            go.GetComponent<NetworkObject>().Spawn();
+            go.GetComponent<NetworkObject>().TrySetParent(gameObject);
+
+            return go;
         }
 
         public List<Vector3Int> ComputePath(int size)
@@ -179,9 +189,12 @@ namespace Game.Board
             Tile[] tiles = GetComponentsInChildren<Game.Board.Tile>();
             for (int i = 0; i < tiles.Length; i++)
             {
-                if (tiles[i].owner == NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().id)
+                for (int j = 0; j < NetworkManager.ConnectedClients.Count; j++)
                 {
-                    NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().transform.position = tiles[i].transform.position;
+                    if (tiles[i].OwnerClientId == NetworkManager.ConnectedClients[(ulong)j].ClientId)
+                    {
+                        NetworkManager.ConnectedClients[(ulong)j].PlayerObject.transform.position = tiles[i].transform.position;
+                    }
                 }
             }
         }

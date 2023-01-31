@@ -29,13 +29,13 @@ namespace Game.Board
             Tile[] tiles = GetComponentsInChildren<Game.Board.Tile>();
             for (int i = 0; i < tiles.Length; i++)
             {
-                if (tiles[i].type == TileType.Start && tiles[i].unitManager == null)
+                if (tiles[i].type.Value == TileType.Start && tiles[i].unitManager == null)
                 {
                     GameObject go = GameObject.Instantiate(prefab, tiles[i].transform);
-                    tiles[i].unitManager = go.GetComponent<Game.Units.Manager>();
-                    tiles[i].unitManager.owner = tiles[i].owner;
                     go.GetComponent<NetworkObject>().Spawn();
                     go.GetComponent<NetworkObject>().TrySetParent(tiles[i].transform);
+                    go.GetComponent<NetworkObject>().ChangeOwnership(tiles[i].GetComponent<NetworkObject>().OwnerClientId);
+                    go.GetComponent<Units.Manager>().SetOwerClientRpc();
                 }
             }
         }
