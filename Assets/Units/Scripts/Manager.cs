@@ -27,7 +27,7 @@ namespace Game.Units
                 Game.Board.Tile tile = tileGo.GetComponent<Tile>();
                 if (tile.GetComponent<NetworkBehaviour>().OwnerClientId == NetworkManager.Singleton.LocalClient.ClientId)
                 {
-                    NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Move(tileGo.transform.position);
+                    NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().MoveServerRpc(tileGo.transform.position);
                     transform.parent.GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 1);
                     transform.parent.GetComponent<MeshRenderer>().materials[1].SetColor("_Color", Color.red);
 

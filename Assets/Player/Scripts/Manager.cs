@@ -21,7 +21,7 @@ namespace Game.Player
                     move = false;
             }
         }
-
+   
         public Color Color()
         {
             return colors[(int)OwnerClientId];
@@ -32,7 +32,8 @@ namespace Game.Player
             return colors[(int)owner];
         }
 
-        public void Move(Vector3 target)
+        [ServerRpc]
+        public void MoveServerRpc(Vector3 target)
         {
             moveTarget = target;
             move = true;

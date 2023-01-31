@@ -62,7 +62,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 227bbc1d791f34c4da0f6721ba63a779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 3
   colors:
   - {r: 1, g: 0.38364774, b: 0.38364774, a: 0}
   - {r: 0.45437473, g: 1, b: 0.3843137, a: 0}
@@ -70,7 +69,6 @@ MonoBehaviour:
   - {r: 0.3843137, g: 0.47724125, b: 1, a: 0}
   - {r: 1, g: 0.3843137, b: 0.9726951, a: 0}
   - {r: 1, g: 0.7983608, b: 0.3843137, a: 0}
-  cam: {fileID: 0}
 --- !u!114 &961720125508524740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,14 +82,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
-  SyncPositionY: 1
+  SyncPositionY: 0
   SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
+  SyncRotAngleX: 0
+  SyncRotAngleY: 0
+  SyncRotAngleZ: 0
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
   PositionThreshold: 0.001
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
