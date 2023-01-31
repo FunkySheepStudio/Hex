@@ -71,14 +71,17 @@ namespace Game.Board
                             {
                                 tile = Spawn(tiles[0], position, tilePosition).GetComponent<Tile>();
                                 tile.type.Value = TileType.Path;
+                                tile.GetComponent<NetworkObject>().ChangeOwnership(6);
                             } else if (IsRandom(r, s, q, size))
                             {
                                 tile = Spawn(trees[0], position, tilePosition).GetComponent<Tile>();
                                 tile.type.Value = TileType.Tree;
+                                tile.GetComponent<NetworkObject>().ChangeOwnership(6);
                             } else
                             {
                                 tile = Spawn(rocks[0], position, tilePosition).GetComponent<Tile>();
                                 tile.type.Value = TileType.Rock;
+                                tile.GetComponent<NetworkObject>().ChangeOwnership(6);
                             }
 
                             tile.position.Value = tilePosition;

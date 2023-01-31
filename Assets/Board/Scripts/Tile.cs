@@ -44,6 +44,13 @@ namespace Game.Board
             return neighbors;
         }
 
+        [ClientRpc]
+        public void UpdateClientsClientRpc()
+        {
+            GetComponent<MeshRenderer>().materials[1].color = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Color(OwnerClientId);
+            GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 1);
+        }
+
         public void RemoveFogOfWar()
         {
             if (OwnerClientId == NetworkManager.Singleton.LocalClient.ClientId)
