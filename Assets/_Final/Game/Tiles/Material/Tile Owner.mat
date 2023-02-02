@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tile Selected
+  m_Name: Tile Owner
   m_Shader: {fileID: -6465566751694194690, guid: 4436695648170994e994ac1dc22b8ff4,
     type: 3}
   m_Parent: {fileID: 0}

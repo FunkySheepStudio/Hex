@@ -2,7 +2,7 @@ using System;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace Game
+namespace OldGame
 {
     public class Manager : NetworkBehaviour
     {

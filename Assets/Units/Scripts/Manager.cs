@@ -8,6 +8,7 @@ namespace Game.Units
     public class Manager : NetworkBehaviour
     {
         public NetworkVariable<int> moveRange = new NetworkVariable<int>(1);
+        public NetworkVariable<int> shootRange = new NetworkVariable<int>(3);
         List<Tile> neighbors = new List<Tile>();
         bool selected = false;
 
@@ -39,9 +40,12 @@ namespace Game.Units
                         neighbors[i].GetComponent<MeshRenderer>().materials[1].SetColor("_Color", Color.white);
                     }
 
+                    CheckShootTargets();
+
                     selected = true;
                 }
             }
+
             if (selected)
             {
                 for (int i = 0; i < neighbors.Count; i++)
@@ -97,6 +101,29 @@ namespace Game.Units
                 neighbors.Clear();
                 selected = false;
             }
+        }
+
+        void CheckShootTargets()
+        {
+            int mask = LayerMask.GetMask("Units");
+            if (Physics.Raycast(transform.position, transform.position + Vector3.left, out var raycastResult0, shootRange.Value, mask))
+                SetTarget(raycastResult0.collider.gameObject);
+            if (Physics.Raycast(transform.position, transform.position + Vector3.right, out var raycastResult1, shootRange.Value, mask))
+                SetTarget(raycastResult1.collider.gameObject);
+            if (Physics.Raycast(transform.position, transform.position + (Vector3.left * 0.5f + Vector3.forward * Mathf.Sqrt(3) / 2), out var raycastResult2, shootRange.Value, mask))
+                SetTarget(raycastResult2.collider.gameObject);
+            if (Physics.Raycast(transform.position, transform.position - (Vector3.left * 0.5f + Vector3.forward * Mathf.Sqrt(3) / 2), out var raycastResult3, shootRange.Value, mask))
+                SetTarget(raycastResult3.collider.gameObject);
+            if (Physics.Raycast(transform.position, transform.position + (Vector3.right * 0.5f + Vector3.forward * Mathf.Sqrt(3) / 2), out var raycastResult4, shootRange.Value, mask))
+                SetTarget(raycastResult4.collider.gameObject);
+            if (Physics.Raycast(transform.position, transform.position - (Vector3.right * 0.5f + Vector3.forward * Mathf.Sqrt(3) / 2), out var raycastResult5, shootRange.Value, mask))
+                SetTarget(raycastResult5.collider.gameObject);
+        }
+
+        void SetTarget(GameObject target)
+        {
+            target.transform.parent.GetComponent<MeshRenderer>().materials[1].SetColor("_Color", Color.blue);
+            target.transform.parent.GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 1);
         }
 
         [ServerRpc]

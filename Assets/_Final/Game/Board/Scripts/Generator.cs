@@ -2,17 +2,18 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.UI.GridLayoutGroup;
 
 namespace Game.Board
 {
     public class Generator : NetworkBehaviour
     {
+        public int size;
+        public NetworkVariable<int> seed = new NetworkVariable<int>(0);
         public List<GameObject> starts;
         public List<GameObject> trees;
         public List<GameObject> rocks;
-        public List<GameObject> tiles;
-        public int size;
-        public NetworkVariable<int> seed = new NetworkVariable<int>();
+        public List<GameObject> paths;
 
         private void Awake()
         {
@@ -27,7 +28,7 @@ namespace Game.Board
             if (IsServer)
             {
                 Generate();
-                GetComponent<FogOfWar>().Generate(NetworkManager.Singleton.LocalClient.ClientId);
+                //GetComponent<FogOfWar>().Generate(NetworkManager.Singleton.LocalClient.ClientId);
                 SetStartPosition();
             }
         }
@@ -45,7 +46,7 @@ namespace Game.Board
         {
             List<Vector3Int> path = ComputePath(size);
 
-            ulong owner = 0;
+            int playerStartPosition = 0;
 
             for (int r = -size; r <= size; r++)
             {
@@ -63,13 +64,24 @@ namespace Game.Board
 
                             if (IsStartPosition(r, s, q, size))
                             {
-                                tile = Spawn(starts[0], position, tilePosition).GetComponent<Tile>();
-                                tile.GetComponent<NetworkObject>().ChangeOwnership(owner);
-                                tile.type.Value = TileType.Start;
-                                owner += 1;
+                                ulong? playerId = GetPlayerIdFromStartPosition(playerStartPosition);
+
+                                if (playerId != null)
+                                {
+                                    tile = Spawn(starts[0], position, tilePosition).GetComponent<Tile>();
+                                    tile.GetComponent<NetworkObject>().ChangeOwnership(playerId.Value);
+                                    tile.type.Value = TileType.Start;
+                                } else
+                                {
+                                    tile = Spawn(paths[0], position, tilePosition).GetComponent<Tile>();
+                                    tile.type.Value = TileType.Path;
+                                    tile.GetComponent<NetworkObject>().ChangeOwnership(6);
+                                }
+
+                                playerStartPosition += 1;
                             } else if (IsPath(r, s, q, path))
                             {
-                                tile = Spawn(tiles[0], position, tilePosition).GetComponent<Tile>();
+                                tile = Spawn(paths[0], position, tilePosition).GetComponent<Tile>();
                                 tile.type.Value = TileType.Path;
                                 tile.GetComponent<NetworkObject>().ChangeOwnership(6);
                             } else if (IsRandom(r, s, q, size))
@@ -89,6 +101,21 @@ namespace Game.Board
                     }
                 }
             }
+        }
+
+        public ulong? GetPlayerIdFromStartPosition(int startPosition)
+        {
+            ulong? playerId = null;
+
+            for (int i = 0; i < Game.Manager.Instance.currentMode.playerSettings.Count; i++)
+            {
+                if (Game.Manager.Instance.currentMode.playerSettings[i].startPosition == startPosition)
+                {
+                    playerId = Game.Manager.Instance.currentMode.playerSettings[i].id;
+                }
+            }
+
+            return playerId;
         }
 
         GameObject Spawn(GameObject prefab, Vector3 position, Vector3Int tilePosition)

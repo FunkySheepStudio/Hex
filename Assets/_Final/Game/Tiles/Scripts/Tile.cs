@@ -21,6 +21,24 @@ namespace Game.Board
         public Game.Units.Manager unitManager;
         public GameObject fogOfWar;
 
+        private void Start()
+        {
+            ShowOwner();
+        }
+
+        public void ShowOwner()
+        {
+            ulong ownerId = GetComponent<NetworkObject>().OwnerClientId;
+            if (ownerId != 6)
+            {
+                GetComponent<MeshRenderer>().materials[1].color = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Color(ownerId);
+                GetComponent<MeshRenderer>().materials[1].SetInt("_Show", 1);
+            } else
+            {
+                GetComponent<MeshRenderer>().materials[1].SetInt("_Show", 0);
+            }
+        }
+
         public List<Tile> FindNeighbors(int range = 1)
         {
             List<Tile> neighbors = new List<Tile>();

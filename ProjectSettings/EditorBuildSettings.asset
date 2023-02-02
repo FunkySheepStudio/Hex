@@ -6,11 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Netcode/Netcode.unity
-    guid: 8336ecfcb8a61d242ad4cb73c04ecb39
+    path: Assets/_Final/Login/Login.unity
+    guid: c0864fa0486117c4484e4b947ce9bb5a
   - enabled: 1
-    path: Assets/Game/Game.unity
-    guid: 425300d3d9c5c6a4aba6cadaa73f9543
+    path: Assets/_Final/Modes/Modes.unity
+    guid: 24a55ce1d2a81eb4db8b8547ec0b170b
+  - enabled: 1
+    path: Assets/_Final/Game/Netcode/Netcode.unity
+    guid: 4c0bb00cdfd7e974c829939a3769ba7b
+  - enabled: 1
+    path: Assets/_Final/Game/Game.unity
+    guid: 95b77641844b3d541b15035d4b143c90
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 5639824e500ad554da417e351adbd37c,
       type: 2}
