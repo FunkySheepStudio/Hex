@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Actions:
+  - {fileID: 11400000, guid: 4658cef10d2e65b4a9c25d2d9fa36b94, type: 2}
   - {fileID: 11400000, guid: 297c82deecabd444cb213e5e31b44bf9, type: 2}
   moveRange:
     m_InternalValue: 1

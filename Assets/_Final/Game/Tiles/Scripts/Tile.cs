@@ -39,6 +39,19 @@ namespace Game.Board
             }
         }
 
+        [ServerRpc]
+        public void MoveUnitServerRpc(NetworkBehaviourReference destinationTile)
+        {
+            if (destinationTile.TryGet<NetworkBehaviour>(out NetworkBehaviour tileDestinationGo))
+            {
+                Units.Manager unit = GetComponentInChildren<Units.Manager>();
+                unit.GetComponent<NetworkObject>().TrySetParent(tileDestinationGo.transform);
+                unit.transform.position = tileDestinationGo.transform.position;
+                tileDestinationGo.GetComponent<NetworkObject>().ChangeOwnership(OwnerClientId);
+                tileDestinationGo.GetComponent<Tile>().ShowOwnerClientRpc();
+            }
+        }
+
         public void OnTileSelection(GameObject selectorManager)
         {
             if (selectorManager.GetComponent<Selector.Manager>().selectedTile == gameObject && IsOwner
@@ -81,29 +94,6 @@ namespace Game.Board
                     unit.OnSelectionMove(selector);
                 }
             }
-        }
-
-        public List<Tile> FindMoveLocations(int range = 1)
-        {
-            List<Tile> neighbors = new List<Tile>();
-            Tile[] tiles = transform.parent.GetComponentsInChildren<Tile>();
-
-            for (int i = 0; i < tiles.Length; i++)
-            {
-                if (tiles[i].gameObject != gameObject &&
-                    tiles[i].GetComponentInChildren<Units.Manager>() == null &&
-                    tiles[i].type.Value != TileType.Rock &&
-                    tiles[i].type.Value != TileType.Start &&
-                    Mathf.Abs(position.Value.x - tiles[i].position.Value.x) <= range &&
-                    Mathf.Abs(position.Value.y - tiles[i].position.Value.y) <= range &&
-                    Mathf.Abs(position.Value.z - tiles[i].position.Value.z) <= range
-                )
-                {
-                    neighbors.Add(tiles[i]);
-                }
-            }
-
-            return neighbors;
         }
     }
 }

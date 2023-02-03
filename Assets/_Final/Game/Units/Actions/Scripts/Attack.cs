@@ -1,5 +1,6 @@
 using Game.Board;
 using log4net.Util;
+using Unity.Netcode;
 using UnityEngine;
 using static UnityEngine.UI.CanvasScaler;
 
@@ -60,7 +61,11 @@ namespace Game.Units.Actions
             targets.Clear();
         }
 
-        public override void Execute()
+        public override void OnSelectionMove(Selector.Manager selector)
+        {
+        }
+
+        public override void Execute(Selector.Manager selector, Units.Manager unit)
         {
         }
     }
