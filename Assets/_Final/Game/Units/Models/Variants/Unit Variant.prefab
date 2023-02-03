@@ -154,6 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b8736ae7d6ae14d9b9f7a0700c3c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Actions:
+  - {fileID: 11400000, guid: 297c82deecabd444cb213e5e31b44bf9, type: 2}
   moveRange:
     m_InternalValue: 1
   shootRange:
@@ -179,4 +181,4 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 4711208715938537054, guid: 47cf827f40e245a42b302a35ac4166c8, type: 3}
+  m_Mesh: {fileID: -5862673794769339907, guid: 47cf827f40e245a42b302a35ac4166c8, type: 3}
