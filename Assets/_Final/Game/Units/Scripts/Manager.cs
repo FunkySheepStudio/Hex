@@ -7,13 +7,20 @@ namespace Game.Units
 {
     public class Manager : NetworkBehaviour
     {
+        public NetworkVariable<float> health = new NetworkVariable<float>(1);
         public List<Actions.Action> Actions;
+
+        public override void OnNetworkSpawn()
+        {
+            health.OnValueChanged += (float previous, float current) => {
+                GetComponent<MeshRenderer>().material.SetFloat("_Fill", current);
+            };
+        }
 
         [ClientRpc]
         public void SetOwerClientRpc()
         {
             GetComponent<MeshRenderer>().material.SetColor("_Color", NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Color(OwnerClientId));
-            GetComponent<MeshRenderer>().material.SetInt("_Show", 1);
         }
 
         public void OnSelect(Tile tile)
@@ -37,7 +44,7 @@ namespace Game.Units
         {
             for (int i = 0; i < Actions.Count; i++)
             {
-                Actions[i].OnSelectionMove(selector);
+                Actions[i].OnSelectionMove(selector, this);
             }
         }
     }

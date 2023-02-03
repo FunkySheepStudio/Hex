@@ -1,16 +1,16 @@
 using Game.Board;
-using log4net.Util;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.UI.CanvasScaler;
+using static UnityEngine.InputSystem.HID.HID;
 
 namespace Game.Units.Actions
 {
     [CreateAssetMenu(menuName = "Game/Units/Actions/Move")]
     public class Move : Action
     {
+        GameObject simulation;
+
         public override void Evaluate(Manager unit)
         {
             List<Tile> neighbors = new List<Tile>();
@@ -48,15 +48,19 @@ namespace Game.Units.Actions
                 targetTile.GetComponent<MeshRenderer>().materials[2].SetInt("_Show", 0);
             }
             targets.Clear();
+            GameObject.Destroy(simulation);
         }
 
-        public override void OnSelectionMove(Selector.Manager selector)
+        public override void OnSelectionMove(Selector.Manager selector, Units.Manager unit)
         {
+            GameObject.Destroy(simulation);
+
             for (int i = 0; i < targets.Count; i++)
             {
                 if (selector.moveSelectedTile == targets[i].gameObject)
                 {
                     targets[i].GetComponent<MeshRenderer>().materials[2].SetColor("_Color", Color.yellow);
+                    Simulate(i, unit);
                 }
 
                 if (selector.lastMoveSelectedTile != null && selector.lastMoveSelectedTile == targets[i].gameObject)
@@ -66,20 +70,21 @@ namespace Game.Units.Actions
             }
         }
 
+        void Simulate(int targetIndex, Units.Manager unit)
+        {
+            simulation = GameObject.Instantiate(unit.gameObject);
+            simulation.GetComponent<MeshCollider>().enabled = false;
+            simulation.transform.position = targets[targetIndex].transform.position;
+            float fill = simulation.GetComponent<MeshRenderer>().material.GetFloat("_Fill");
+            simulation.GetComponent<MeshRenderer>().material.SetFloat("_Fill", fill - 0.1f);
+        }
+
         public override void Execute(Selector.Manager selector, Units.Manager unit)
         {
-            unit.transform.parent.GetComponent<Tile>().MoveUnitServerRpc(selector.lastMoveSelectedTile.GetComponent<NetworkBehaviour>());
-            /*unit.GetComponent<NetworkObject>().TrySetParent(selector.lastMoveSelectedTile.transform);
-            unit.transform.position = selector.lastMoveSelectedTile.transform.position;*/
-
-            /*if (tileGoRef.TryGet<NetworkBehaviour>(out NetworkBehaviour tileGo))
+            if (selector.lastMoveSelectedTile != null)
             {
-                unit.GetComponent<NetworkObject>().TrySetParent(tileGo.transform);
-                //transform.SetParent(tileGo.transform);
-                unit.transform.position = tileGo.transform.position;
-                //tileGo.GetComponent<NetworkObject>().ChangeOwnership(unit.OwnerClientId);
-                //tileGo.GetComponent<Tile>().ShowOwnerClientRpc();
-            }*/
+                unit.transform.parent.GetComponent<Tile>().MoveUnitServerRpc(selector.lastMoveSelectedTile.GetComponent<NetworkBehaviour>());
+            }
         }
     }
 }

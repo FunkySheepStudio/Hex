@@ -61,7 +61,7 @@ namespace Game.Units.Actions
             targets.Clear();
         }
 
-        public override void OnSelectionMove(Selector.Manager selector)
+        public override void OnSelectionMove(Selector.Manager selector, Units.Manager unit)
         {
         }
 

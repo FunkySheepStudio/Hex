@@ -45,6 +45,7 @@ namespace Game.Board
             if (destinationTile.TryGet<NetworkBehaviour>(out NetworkBehaviour tileDestinationGo))
             {
                 Units.Manager unit = GetComponentInChildren<Units.Manager>();
+                unit.health.Value -= 0.1f;
                 unit.GetComponent<NetworkObject>().TrySetParent(tileDestinationGo.transform);
                 unit.transform.position = tileDestinationGo.transform.position;
                 tileDestinationGo.GetComponent<NetworkObject>().ChangeOwnership(OwnerClientId);
