@@ -17,16 +17,14 @@ namespace Game.Board
     {
         public NetworkVariable<Vector3Int> position = new NetworkVariable<Vector3Int>();
         public NetworkVariable<TileType> type = new NetworkVariable<TileType>();
-        public bool selected = false;
-        public Game.Units.Manager unitManager;
-        public GameObject fogOfWar;
 
         private void Start()
         {
-            ShowOwner();
+            ShowOwnerClientRpc();
         }
 
-        public void ShowOwner()
+        [ClientRpc]
+        public void ShowOwnerClientRpc()
         {
             ulong ownerId = GetComponent<NetworkObject>().OwnerClientId;
             if (ownerId != 6)
@@ -39,7 +37,51 @@ namespace Game.Board
             }
         }
 
-        public List<Tile> FindNeighbors(int range = 1)
+        public void OnTileSelection(GameObject selectorManager)
+        {
+            if (selectorManager.GetComponent<Selector.Manager>().selectedTile == gameObject && IsOwner
+            )
+            {
+                GetComponent<MeshRenderer>().materials[2].color = Color.green;
+                GetComponent<MeshRenderer>().materials[2].SetInt("_Show", 1);
+
+                Units.Manager unit = GetComponentInChildren<Units.Manager>();
+                if (unit != null)
+                {
+                    unit.OnSelect(this);
+                }
+            }
+        }
+
+        public void OnTileDeSelection(GameObject selectorManager)
+        {
+            Selector.Manager selector = selectorManager.GetComponent<Selector.Manager>();
+            if (selector.selectedTile == gameObject && IsOwner)
+            {
+                GetComponent<MeshRenderer>().materials[2].SetInt("_Show", 0);
+
+                Units.Manager unit = GetComponentInChildren<Units.Manager>();
+                if (unit != null)
+                {
+                    unit.OnDeSelect(selector);
+                }
+            }
+        }
+
+        public void OnTileSelectionMoved(GameObject selectorManager)
+        {
+            Selector.Manager selector = selectorManager.GetComponent<Selector.Manager>();
+            if (selector.selectedTile == gameObject && IsOwner)
+            {
+                Units.Manager unit = GetComponentInChildren<Units.Manager>();
+                if (unit != null)
+                {
+                    unit.OnSelectionMove(selector);
+                }
+            }
+        }
+
+        public List<Tile> FindMoveLocations(int range = 1)
         {
             List<Tile> neighbors = new List<Tile>();
             Tile[] tiles = transform.parent.GetComponentsInChildren<Tile>();
@@ -47,7 +89,7 @@ namespace Game.Board
             for (int i = 0; i < tiles.Length; i++)
             {
                 if (tiles[i].gameObject != gameObject &&
-                    tiles[i].unitManager == null &&
+                    tiles[i].GetComponentInChildren<Units.Manager>() == null &&
                     tiles[i].type.Value != TileType.Rock &&
                     tiles[i].type.Value != TileType.Start &&
                     Mathf.Abs(position.Value.x - tiles[i].position.Value.x) <= range &&
@@ -60,25 +102,6 @@ namespace Game.Board
             }
 
             return neighbors;
-        }
-
-        [ClientRpc]
-        public void UpdateClientsClientRpc()
-        {
-            GetComponent<MeshRenderer>().materials[1].color = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Color(OwnerClientId);
-            GetComponent<MeshRenderer>().materials[1].SetInt("_Selected", 1);
-        }
-
-        public void RemoveFogOfWar()
-        {
-            if (OwnerClientId == NetworkManager.Singleton.LocalClient.ClientId)
-            {
-                List<Tile> tiles = FindNeighbors(2);
-                for (int i = 0; i < tiles.Count; i++)
-                {
-                    GameObject.Destroy(tiles[i].fogOfWar);
-                }
-            }
         }
     }
 }

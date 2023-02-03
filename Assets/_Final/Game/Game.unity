@@ -123,6 +123,79 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &493404915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 493404918}
+  - component: {fileID: 493404917}
+  - component: {fileID: 493404916}
+  m_Layer: 0
+  m_Name: Camera Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &493404916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493404915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef7e45e42abc494e8d5f95a4d0c85a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 1b394ce30f7b7824cb6339049212b9c1, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 493404917}
+        m_TargetAssemblyTypeName: Game.Cameras.MoveTargetToSelection, Game
+        m_MethodName: Move
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &493404917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493404915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2edba3d1a951af94995daa3fbb106d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &493404918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493404915}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &860688693
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +206,6 @@ GameObject:
   m_Component:
   - component: {fileID: 860688695}
   - component: {fileID: 860688694}
-  - component: {fileID: 860688696}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -159,8 +231,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_LookAt: {fileID: 493404918}
+  m_Follow: {fileID: 493404918}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
@@ -188,7 +260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 860688693}
   m_LocalRotation: {x: 0.1159169, y: 0.8804763, z: -0.27984816, w: 0.3647052}
-  m_LocalPosition: {x: -4, y: 4, z: 4}
+  m_LocalPosition: {x: -3.9999995, y: 4, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -196,18 +268,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &860688696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 860688693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23cfe471a8c3a04438f932482c35cefe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &916752665
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,7 +336,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -296,7 +356,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 916752665}
   m_LocalRotation: {x: 0.1159169, y: 0.8804763, z: -0.27984816, w: 0.3647052}
-  m_LocalPosition: {x: -4, y: 4, z: 4}
+  m_LocalPosition: {x: -3.9999995, y: 4, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -393,8 +453,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedEvent: {fileID: 11400000, guid: 1b394ce30f7b7824cb6339049212b9c1, type: 2}
-  deSelectedEvent: {fileID: 11400000, guid: a66558e1b808cab43a7c9eb0b86238c9, type: 2}
-  stopSelectedEvent: {fileID: 11400000, guid: f867c45838773e34caad0c42bf97d83d, type: 2}
+  movedEvent: {fileID: 11400000, guid: a66558e1b808cab43a7c9eb0b86238c9, type: 2}
+  deSelectedEvent: {fileID: 11400000, guid: f867c45838773e34caad0c42bf97d83d, type: 2}
+  selectedTile: {fileID: 0}
+  moveSelectedTile: {fileID: 0}
 --- !u!1 &924023432
 GameObject:
   m_ObjectHideFlags: 3
@@ -518,7 +580,6 @@ GameObject:
   - component: {fileID: 1226944016}
   - component: {fileID: 1226944015}
   - component: {fileID: 1226944013}
-  - component: {fileID: 1226944017}
   m_Layer: 0
   m_Name: Map Camera
   m_TagString: Untagged
@@ -604,7 +665,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -635,21 +696,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &1226944017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1226944012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7802039260c310a4ba24788a4397a8cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectedEvent: {fileID: 11400000, guid: 1b394ce30f7b7824cb6339049212b9c1, type: 2}
-  deSelectedEvent: {fileID: 11400000, guid: a66558e1b808cab43a7c9eb0b86238c9, type: 2}
-  stopSelectedEvent: {fileID: 11400000, guid: f867c45838773e34caad0c42bf97d83d, type: 2}
 --- !u!1 &1442021558
 GameObject:
   m_ObjectHideFlags: 0

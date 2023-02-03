@@ -66,17 +66,32 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 5c0addc07c3185e42ae2f4bc005730a7,
         type: 3}
       propertyPath: m_Materials.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5c0addc07c3185e42ae2f4bc005730a7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 77d1c612180f1614d8855b142f7d7d62, type: 2}
     - target: {fileID: -7511558181221131132, guid: 5c0addc07c3185e42ae2f4bc005730a7,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 370e7cfb82682844783526e58c81f0f3, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 5c0addc07c3185e42ae2f4bc005730a7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: da15074994dd5ca4fb0f6408a92ab6e6, type: 2}
     - target: {fileID: 919132149155446097, guid: 5c0addc07c3185e42ae2f4bc005730a7,
         type: 3}
       propertyPath: m_Name
       value: Tile Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5c0addc07c3185e42ae2f4bc005730a7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -90,6 +105,22 @@ PrefabInstance:
         type: 3}
       insertIndex: 2
       addedObject: {fileID: 4149108104295046350}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5c0addc07c3185e42ae2f4bc005730a7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3120869287606420465}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5c0addc07c3185e42ae2f4bc005730a7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5847746445337635371}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5c0addc07c3185e42ae2f4bc005730a7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2907633775195925238}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5c0addc07c3185e42ae2f4bc005730a7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4734826837240333763}
   m_SourcePrefab: {fileID: 100100000, guid: 5c0addc07c3185e42ae2f4bc005730a7, type: 3}
 --- !u!1 &5249656598532183719 stripped
 GameObject:
@@ -130,5 +161,111 @@ MonoBehaviour:
   type:
     m_InternalValue: 0
   selected: 0
-  unitManager: {fileID: 0}
+  unit: {fileID: 0}
   fogOfWar: {fileID: 0}
+--- !u!64 &3120869287606420465
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5249656598532183719}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4457607245505209530, guid: 5c0addc07c3185e42ae2f4bc005730a7, type: 3}
+--- !u!114 &5847746445337635371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5249656598532183719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef7e45e42abc494e8d5f95a4d0c85a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 1b394ce30f7b7824cb6339049212b9c1, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4149108104295046350}
+        m_TargetAssemblyTypeName: Game.Board.Tile, Game
+        m_MethodName: OnTileSelection
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2907633775195925238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5249656598532183719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef7e45e42abc494e8d5f95a4d0c85a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: f867c45838773e34caad0c42bf97d83d, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4149108104295046350}
+        m_TargetAssemblyTypeName: Game.Board.Tile, Game
+        m_MethodName: OnTileDeSelection
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-4734826837240333763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5249656598532183719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef7e45e42abc494e8d5f95a4d0c85a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: a66558e1b808cab43a7c9eb0b86238c9, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4149108104295046350}
+        m_TargetAssemblyTypeName: Game.Board.Tile, Game
+        m_MethodName: OnTileSelectionMoved
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

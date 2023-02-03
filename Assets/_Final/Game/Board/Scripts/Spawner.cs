@@ -6,7 +6,6 @@ namespace Game.Board
     public class Spawner : NetworkBehaviour
     {
         public GameObject prefab;
-        public NetworkVariable<int> turn = new NetworkVariable<int>();
         public float turnTime = 5;
         float elapsedTime = 0;
 
@@ -18,7 +17,6 @@ namespace Game.Board
                 if (elapsedTime >= turnTime)
                 {
                     elapsedTime = 0;
-                    turn.Value += 1;
                     Spawn();
                 }
             }
@@ -29,7 +27,7 @@ namespace Game.Board
             Tile[] tiles = GetComponentsInChildren<Game.Board.Tile>();
             for (int i = 0; i < tiles.Length; i++)
             {
-                if (tiles[i].type.Value == TileType.Start && tiles[i].unitManager == null)
+                if (tiles[i].type.Value == TileType.Start && tiles[i].GetComponentInChildren<Units.Manager>() == null)
                 {
                     GameObject go = GameObject.Instantiate(prefab, tiles[i].transform);
                     go.GetComponent<NetworkObject>().Spawn();

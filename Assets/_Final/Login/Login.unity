@@ -762,8 +762,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMode: {fileID: 11400000, guid: e857f2af9ed4716458349133caf559c8, type: 2}
-  boardPrefab: {fileID: 6610848431424874542, guid: 0b9db3b07bc6fad48a3f34c2e22e134e,
-    type: 3}
 --- !u!4 &2084116690
 Transform:
   m_ObjectHideFlags: 0
