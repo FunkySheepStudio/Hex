@@ -84,6 +84,6 @@ MonoBehaviour:
   trees:
   - {fileID: 5249656598532183719, guid: c4c33858f854a0746abfd0233ba6234e, type: 3}
   rocks:
-  - {fileID: 5249656598532183719, guid: c4c33858f854a0746abfd0233ba6234e, type: 3}
+  - {fileID: 1615948776526180206, guid: d1fec9f5b8337e745adbe80b044d6c46, type: 3}
   paths:
   - {fileID: 5249656598532183719, guid: c4c33858f854a0746abfd0233ba6234e, type: 3}
