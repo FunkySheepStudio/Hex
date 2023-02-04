@@ -1,48 +1,44 @@
 using Game.Board;
-using log4net.Util;
-using Unity.Netcode;
 using UnityEngine;
-using static UnityEngine.UI.CanvasScaler;
 
 namespace Game.Units.Actions
 {
-    [CreateAssetMenu(menuName = "Game/Units/Actions/Attack")]
     public class Attack : Action
     {
-        public override void Evaluate(Manager unit)
+        public override void Evaluate()
         {
-            Vector3 startPosition = unit.transform.position + Vector3.up * 0.30f;
+            Vector3 startPosition = transform.position + Vector3.up * 0.30f;
             int mask = LayerMask.GetMask("Units");
                         
             if (Physics.Raycast(startPosition, Vector3.right, out var raycastResult1, range, mask))
             {
-                AddTile(raycastResult1.collider.gameObject, unit);
+                AddTile(raycastResult1.collider.gameObject);
             }
             if (Physics.Raycast(startPosition, Vector3.left, out var raycastResult0, range, mask))
             {
-                AddTile(raycastResult0.collider.gameObject, unit);
+                AddTile(raycastResult0.collider.gameObject);
             }
             if (Physics.Raycast(startPosition, (Vector3.left * 0.5f + Vector3.forward * Mathf.Sqrt(3) / 2), out var raycastResult2, range, mask))
             {
-                AddTile(raycastResult2.collider.gameObject, unit);
+                AddTile(raycastResult2.collider.gameObject);
             }
             if (Physics.Raycast(startPosition, -(Vector3.left * 0.5f + Vector3.forward * Mathf.Sqrt(3) / 2), out var raycastResult3, range, mask))
             {
-                AddTile(raycastResult3.collider.gameObject, unit);
+                AddTile(raycastResult3.collider.gameObject);
             }
             if (Physics.Raycast(startPosition, (Vector3.right * 0.5f + Vector3.forward * Mathf.Sqrt(3) / 2), out var raycastResult4, range, mask))
             {
-                AddTile(raycastResult4.collider.gameObject, unit);
+                AddTile(raycastResult4.collider.gameObject);
             }
             if (Physics.Raycast(startPosition, -(Vector3.right * 0.5f + Vector3.forward * Mathf.Sqrt(3) / 2), out var raycastResult5, range, mask))
             {
-                AddTile(raycastResult5.collider.gameObject, unit);
+                AddTile(raycastResult5.collider.gameObject);
             }
         }
 
-        void AddTile(GameObject targetUnit, Manager unit)
+        void AddTile(GameObject targetUnit)
         {
-            if (targetUnit.gameObject != unit.gameObject)
+            if (targetUnit.gameObject != gameObject)
             {
                 Tile targetTile = targetUnit.transform.parent.GetComponent<Tile>();
                 targetTile.GetComponent<MeshRenderer>().materials[2].color = Color.magenta;
@@ -61,11 +57,11 @@ namespace Game.Units.Actions
             targets.Clear();
         }
 
-        public override void OnSelectionMove(Selector.Manager selector, Units.Manager unit)
+        public override void OnSelectionMove(Selector.Manager selector)
         {
         }
 
-        public override void Execute(Selector.Manager selector, Units.Manager unit)
+        public override void Execute(Selector.Manager selector)
         {
         }
     }

@@ -12,6 +12,7 @@ namespace Game.Units
 
         public override void OnNetworkSpawn()
         {
+            Actions = new List<Actions.Action>();
             health.OnValueChanged += (float previous, float current) => {
                 GetComponent<MeshRenderer>().material.SetFloat("_Fill", current);
             };
@@ -27,7 +28,7 @@ namespace Game.Units
         {
             for (int i = 0; i < Actions.Count; i++)
             {
-                Actions[i].Evaluate(this);
+                Actions[i].Evaluate();
             }
         }
 
@@ -35,7 +36,7 @@ namespace Game.Units
         {
             for (int i = 0; i < Actions.Count; i++)
             {
-                Actions[i].Execute(selector, this);
+                Actions[i].Execute(selector);
                 Actions[i].Clear();
             }
         }
@@ -44,7 +45,7 @@ namespace Game.Units
         {
             for (int i = 0; i < Actions.Count; i++)
             {
-                Actions[i].OnSelectionMove(selector, this);
+                Actions[i].OnSelectionMove(selector);
             }
         }
     }

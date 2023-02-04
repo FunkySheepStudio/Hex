@@ -6,16 +6,14 @@ using static UnityEngine.InputSystem.HID.HID;
 
 namespace Game.Units.Actions
 {
-    [CreateAssetMenu(menuName = "Game/Units/Actions/Move")]
     public class Move : Action
     {
         GameObject simulation;
 
-        public override void Evaluate(Manager unit)
+        public override void Evaluate()
         {
-            List<Tile> neighbors = new List<Tile>();
-            Tile[] tiles = unit.transform.parent.parent.GetComponentsInChildren<Tile>();
-            Tile currentTile = unit.transform.parent.GetComponent<Tile>();
+            Tile[] tiles = transform.parent.parent.GetComponentsInChildren<Tile>();
+            Tile currentTile = transform.parent.GetComponent<Tile>();
 
             for (int i = 0; i < tiles.Length; i++)
             {
@@ -51,7 +49,7 @@ namespace Game.Units.Actions
             GameObject.Destroy(simulation);
         }
 
-        public override void OnSelectionMove(Selector.Manager selector, Units.Manager unit)
+        public override void OnSelectionMove(Selector.Manager selector)
         {
             GameObject.Destroy(simulation);
 
@@ -60,7 +58,7 @@ namespace Game.Units.Actions
                 if (selector.moveSelectedTile == targets[i].gameObject)
                 {
                     targets[i].GetComponent<MeshRenderer>().materials[2].SetColor("_Color", Color.yellow);
-                    Simulate(i, unit);
+                    Simulate(i);
                 }
 
                 if (selector.lastMoveSelectedTile != null && selector.lastMoveSelectedTile == targets[i].gameObject)
@@ -70,20 +68,33 @@ namespace Game.Units.Actions
             }
         }
 
-        void Simulate(int targetIndex, Units.Manager unit)
+        void Simulate(int targetIndex)
         {
-            simulation = GameObject.Instantiate(unit.gameObject);
+            simulation = GameObject.Instantiate(gameObject);
             simulation.GetComponent<MeshCollider>().enabled = false;
             simulation.transform.position = targets[targetIndex].transform.position;
             float fill = simulation.GetComponent<MeshRenderer>().material.GetFloat("_Fill");
             simulation.GetComponent<MeshRenderer>().material.SetFloat("_Fill", fill - 0.1f);
         }
 
-        public override void Execute(Selector.Manager selector, Units.Manager unit)
+        public override void Execute(Selector.Manager selector)
         {
             if (selector.lastMoveSelectedTile != null)
             {
-                unit.transform.parent.GetComponent<Tile>().MoveUnitServerRpc(selector.lastMoveSelectedTile.GetComponent<NetworkBehaviour>());
+                MoveUnitServerRpc(selector.lastMoveSelectedTile.GetComponent<NetworkBehaviour>());
+            }
+        }
+
+        [ServerRpc]
+        public void MoveUnitServerRpc(NetworkBehaviourReference destinationTile)
+        {
+            if (destinationTile.TryGet<NetworkBehaviour>(out NetworkBehaviour tileDestinationGo))
+            {
+                unit.health.Value -= 0.1f;
+                unit.GetComponent<NetworkObject>().TrySetParent(tileDestinationGo.transform);
+                unit.transform.position = tileDestinationGo.transform.position;
+                tileDestinationGo.GetComponent<NetworkObject>().ChangeOwnership(OwnerClientId);
+                tileDestinationGo.GetComponent<Tile>().ShowOwnerClientRpc();
             }
         }
     }

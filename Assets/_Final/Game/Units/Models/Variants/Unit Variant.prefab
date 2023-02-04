@@ -91,6 +91,14 @@ PrefabInstance:
       addedObject: {fileID: 902930076035211735}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47cf827f40e245a42b302a35ac4166c8,
         type: 3}
+      insertIndex: 4
+      addedObject: {fileID: -1029979790711800056}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47cf827f40e245a42b302a35ac4166c8,
+        type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 6641304077924022561}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47cf827f40e245a42b302a35ac4166c8,
+        type: 3}
       insertIndex: -1
       addedObject: {fileID: -3424281741728362703}
   m_SourcePrefab: {fileID: 100100000, guid: 47cf827f40e245a42b302a35ac4166c8, type: 3}
@@ -154,13 +162,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b8736ae7d6ae14d9b9f7a0700c3c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health:
+    m_InternalValue: 1
   Actions:
   - {fileID: 11400000, guid: 4658cef10d2e65b4a9c25d2d9fa36b94, type: 2}
   - {fileID: 11400000, guid: 297c82deecabd444cb213e5e31b44bf9, type: 2}
-  moveRange:
-    m_InternalValue: 1
-  shootRange:
-    m_InternalValue: 3
+--- !u!114 &-1029979790711800056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509826667229097407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 309e6b5a3ce57494a9357827942f30ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 1
+  targets: []
+  unit: {fileID: 0}
+--- !u!114 &6641304077924022561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509826667229097407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 093f10899d5e3244f94680e64f671402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 2
+  targets: []
+  unit: {fileID: 0}
 --- !u!64 &-3424281741728362703
 MeshCollider:
   m_ObjectHideFlags: 0

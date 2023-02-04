@@ -39,20 +39,6 @@ namespace Game.Board
             }
         }
 
-        [ServerRpc]
-        public void MoveUnitServerRpc(NetworkBehaviourReference destinationTile)
-        {
-            if (destinationTile.TryGet<NetworkBehaviour>(out NetworkBehaviour tileDestinationGo))
-            {
-                Units.Manager unit = GetComponentInChildren<Units.Manager>();
-                unit.health.Value -= 0.1f;
-                unit.GetComponent<NetworkObject>().TrySetParent(tileDestinationGo.transform);
-                unit.transform.position = tileDestinationGo.transform.position;
-                tileDestinationGo.GetComponent<NetworkObject>().ChangeOwnership(OwnerClientId);
-                tileDestinationGo.GetComponent<Tile>().ShowOwnerClientRpc();
-            }
-        }
-
         public void OnTileSelection(GameObject selectorManager)
         {
             if (selectorManager.GetComponent<Selector.Manager>().selectedTile == gameObject && IsOwner
