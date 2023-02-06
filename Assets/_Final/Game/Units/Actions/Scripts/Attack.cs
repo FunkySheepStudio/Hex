@@ -90,6 +90,7 @@ namespace Game.Units.Actions
                 simulation.transform.localScale.y,
                 Vector3.Distance(transform.position, targets[targetIndex].transform.position)
             );
+            simulation.GetComponent<MeshRenderer>().material.color = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Color(OwnerClientId);
         }
 
         public override void Execute(Selector.Manager selector)
@@ -117,6 +118,8 @@ namespace Game.Units.Actions
                     simulation.transform.localScale.y,
                     Vector3.Distance(transform.position, tileDestinationGo.transform.position)
                 );
+
+                simulation.GetComponent<MeshRenderer>().material.color = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Color(serverRpcParams.Receive.SenderClientId);
 
                 simulation.GetComponent<NetworkObject>().Spawn();
                 simulation.GetComponent<NetworkObject>().TrySetParent(gameObject);
