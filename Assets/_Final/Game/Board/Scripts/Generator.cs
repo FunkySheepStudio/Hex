@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.UI.GridLayoutGroup;
 
 namespace Game.Board
 {
@@ -15,18 +13,12 @@ namespace Game.Board
         public List<GameObject> rocks;
         public List<GameObject> paths;
 
-        private void Awake()
-        {
-            if (IsServer)
-            {
-                seed.Value = Random.Range(0, 1000);
-            }
-        }
-
         public override void OnNetworkSpawn()
         {
             if (IsServer)
             {
+                size = Random.Range(5, 10);
+                seed.Value = Random.Range(0, 1000);
                 Generate();
                 //GetComponent<FogOfWar>().Generate(NetworkManager.Singleton.LocalClient.ClientId);
                 SetStartPosition();
@@ -60,7 +52,7 @@ namespace Game.Board
                             (Vector3.left * 0.5f + Vector3.forward * Mathf.Sqrt(3) / 2) * s;
                             Vector3Int tilePosition = new Vector3Int(r, s, q);
 
-                            Tile tile;
+                            Tile tile = null;
 
                             if (IsStartPosition(r, s, q, size))
                             {
@@ -86,17 +78,19 @@ namespace Game.Board
                                 tile.GetComponent<NetworkObject>().ChangeOwnership(6);
                             } else if (IsRandom(r, s, q, size))
                             {
-                                tile = Spawn(trees[0], position, tilePosition).GetComponent<Tile>();
+                                /*tile = Spawn(trees[0], position, tilePosition).GetComponent<Tile>();
                                 tile.type.Value = TileType.Tree;
-                                tile.GetComponent<NetworkObject>().ChangeOwnership(6);
+                                tile.GetComponent<NetworkObject>().ChangeOwnership(6);*/
                             } else
                             {
-                                tile = Spawn(rocks[0], position, tilePosition).GetComponent<Tile>();
+                                /*tile = Spawn(rocks[0], position, tilePosition).GetComponent<Tile>();
                                 tile.type.Value = TileType.Rock;
-                                tile.GetComponent<NetworkObject>().ChangeOwnership(6);
+                                tile.GetComponent<NetworkObject>().ChangeOwnership(6);*/
                             }
-
-                            tile.position.Value = tilePosition;
+                            if (tile != null)
+                            {
+                                tile.position.Value = tilePosition;
+                            }                                
                         }
                     }
                 }

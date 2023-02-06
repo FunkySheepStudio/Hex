@@ -1,4 +1,5 @@
 using Game.Board;
+using Unity.Netcode;
 using UnityEngine;
 using static UnityEngine.InputSystem.HID.HID;
 
@@ -89,13 +90,37 @@ namespace Game.Units.Actions
                 simulation.transform.localScale.y,
                 Vector3.Distance(transform.position, targets[targetIndex].transform.position)
             );
-
-            //simulation.transform.rotation = Quaternion.RotateTowards(simulation.transform.rotation, targets[targetIndex].transform.rotation, 360);
-            //targets[targetIndex].transform.position
         }
 
         public override void Execute(Selector.Manager selector)
         {
+            GameObject.Destroy(simulation);
+            for (int i = 0; i < targets.Count; i++)
+            {
+                if (targets[i].gameObject == selector.lastMoveSelectedTile)
+                {
+                    AttackUnitServerRpc(selector.lastMoveSelectedTile.GetComponent<NetworkBehaviour>());
+                }
+            }
+        }
+
+        [ServerRpc]
+        public void AttackUnitServerRpc(NetworkBehaviourReference destinationTile, ServerRpcParams serverRpcParams = default)
+        {
+            if (destinationTile.TryGet<NetworkBehaviour>(out NetworkBehaviour tileDestinationGo))
+            {
+                simulation = GameObject.Instantiate(prefab);
+                simulation.transform.position = transform.position + Vector3.up * 0.3f;
+                simulation.transform.LookAt(tileDestinationGo.transform.position + Vector3.up * 0.3f);
+                simulation.transform.localScale = new Vector3(
+                    simulation.transform.localScale.x,
+                    simulation.transform.localScale.y,
+                    Vector3.Distance(transform.position, tileDestinationGo.transform.position)
+                );
+
+                simulation.GetComponent<NetworkObject>().Spawn();
+                simulation.GetComponent<NetworkObject>().TrySetParent(gameObject);
+            }
         }
     }
 }

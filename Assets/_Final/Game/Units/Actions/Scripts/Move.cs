@@ -80,26 +80,36 @@ namespace Game.Units.Actions
             simulation = GameObject.Instantiate(gameObject);
             simulation.GetComponent<MeshCollider>().enabled = false;
             simulation.transform.position = targets[targetIndex].transform.position;
-            float fill = simulation.GetComponent<MeshRenderer>().material.GetFloat("_Fill");
-            simulation.GetComponent<MeshRenderer>().material.SetFloat("_Fill", fill - 0.1f);
+            if (targets[targetIndex].OwnerClientId != NetworkManager.LocalClientId)
+            {
+                float fill = simulation.GetComponent<MeshRenderer>().material.GetFloat("_Fill");
+                simulation.GetComponent<MeshRenderer>().material.SetFloat("_Fill", fill - 0.1f);
+            }
+            
         }
 
         public override void Execute(Selector.Manager selector)
         {
-            if (selector.lastMoveSelectedTile != null)
+            for (int i = 0; i < targets.Count; i++)
             {
-                MoveUnitServerRpc(selector.lastMoveSelectedTile.GetComponent<NetworkBehaviour>());
-                audioSource.clip = audioClip;
-                audioSource.Play();
+                if (targets[i].gameObject == selector.lastMoveSelectedTile)
+                {
+                    MoveUnitServerRpc(selector.lastMoveSelectedTile.GetComponent<NetworkBehaviour>());
+                    audioSource.clip = audioClip;
+                    audioSource.Play();
+                }
             }
         }
 
         [ServerRpc]
-        public void MoveUnitServerRpc(NetworkBehaviourReference destinationTile)
+        public void MoveUnitServerRpc(NetworkBehaviourReference destinationTile, ServerRpcParams serverRpcParams = default)
         {
             if (destinationTile.TryGet<NetworkBehaviour>(out NetworkBehaviour tileDestinationGo))
             {
-                unit.health.Value -= 0.1f;
+                if (tileDestinationGo.OwnerClientId != serverRpcParams.Receive.SenderClientId)
+                {
+                    unit.health.Value -= 0.1f;
+                }
                 unit.GetComponent<NetworkObject>().TrySetParent(tileDestinationGo.transform);
                 unit.transform.position = tileDestinationGo.transform.position;
                 tileDestinationGo.GetComponent<NetworkObject>().ChangeOwnership(OwnerClientId);
