@@ -197,6 +197,7 @@ MonoBehaviour:
   range: 2
   targets: []
   unit: {fileID: 0}
+  prefab: {fileID: 6843842986278036897, guid: 08665ea68e87ce24ebadc61e9da286ca, type: 3}
 --- !u!64 &-3424281741728362703
 MeshCollider:
   m_ObjectHideFlags: 0

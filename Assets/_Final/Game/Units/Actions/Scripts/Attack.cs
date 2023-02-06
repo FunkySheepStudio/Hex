@@ -1,10 +1,13 @@
 using Game.Board;
 using UnityEngine;
+using static UnityEngine.InputSystem.HID.HID;
 
 namespace Game.Units.Actions
 {
     public class Attack : Action
     {
+        public GameObject prefab;
+        GameObject simulation;
         public override void Evaluate()
         {
             Vector3 startPosition = transform.position + Vector3.up * 0.30f;
@@ -59,6 +62,36 @@ namespace Game.Units.Actions
 
         public override void OnSelectionMove(Selector.Manager selector)
         {
+            GameObject.Destroy(simulation);
+
+            for (int i = 0; i < targets.Count; i++)
+            {
+                if (selector.moveSelectedTile == targets[i].gameObject)
+                {
+                    targets[i].GetComponent<MeshRenderer>().materials[2].SetColor("_Color", Color.yellow);
+                    Simulate(i);
+                }
+
+                if (selector.lastMoveSelectedTile != null && selector.lastMoveSelectedTile == targets[i].gameObject)
+                {
+                    targets[i].GetComponent<MeshRenderer>().materials[2].SetColor("_Color", Color.magenta);
+                }
+            }
+        }
+
+        void Simulate(int targetIndex)
+        {
+            simulation = GameObject.Instantiate(prefab);
+            simulation.transform.position = transform.position + Vector3.up * 0.3f;
+            simulation.transform.LookAt(targets[targetIndex].transform.position + Vector3.up * 0.3f);
+            simulation.transform.localScale = new Vector3(
+                simulation.transform.localScale.x,
+                simulation.transform.localScale.y,
+                Vector3.Distance(transform.position, targets[targetIndex].transform.position)
+            );
+
+            //simulation.transform.rotation = Quaternion.RotateTowards(simulation.transform.rotation, targets[targetIndex].transform.rotation, 360);
+            //targets[targetIndex].transform.position
         }
 
         public override void Execute(Selector.Manager selector)
