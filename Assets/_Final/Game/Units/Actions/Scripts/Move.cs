@@ -8,7 +8,14 @@ namespace Game.Units.Actions
 {
     public class Move : Action
     {
+        public AudioClip audioClip;
         GameObject simulation;
+        AudioSource audioSource;
+
+        private void Awake()
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
 
         public override void Evaluate()
         {
@@ -82,6 +89,8 @@ namespace Game.Units.Actions
             if (selector.lastMoveSelectedTile != null)
             {
                 MoveUnitServerRpc(selector.lastMoveSelectedTile.GetComponent<NetworkBehaviour>());
+                audioSource.clip = audioClip;
+                audioSource.Play();
             }
         }
 
