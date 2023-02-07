@@ -15,6 +15,10 @@ namespace Game.Units
             Actions = new List<Actions.Action>();
             health.OnValueChanged += (float previous, float current) => {
                 GetComponent<MeshRenderer>().material.SetFloat("_Fill", current);
+                if (IsServer && current <= 0)
+                {
+                    Destroy(gameObject);
+                }
             };
         }
 

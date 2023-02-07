@@ -1,0 +1,54 @@
+{
+    "name": "Selector Inputs",
+    "maps": [
+        {
+            "name": "Selector",
+            "id": "ef495877-934d-4521-831b-674892e5b067",
+            "actions": [
+                {
+                    "name": "Point",
+                    "type": "Value",
+                    "id": "c7fe9a34-982d-462f-ac5c-3ab1041af432",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "7cc67053-c15f-4a87-a955-569fe87b20b4",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ad93cb57-2fb3-483d-b736-58e949914ee5",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5b5d2951-c731-4cfc-9a2a-d837b67d67cc",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

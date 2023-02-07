@@ -1,7 +1,6 @@
 using Game.Board;
 using Unity.Netcode;
 using UnityEngine;
-using static UnityEngine.InputSystem.HID.HID;
 
 namespace Game.Units.Actions
 {
@@ -9,6 +8,9 @@ namespace Game.Units.Actions
     {
         public GameObject prefab;
         GameObject simulation;
+        bool IsTransfering = false;
+        GameObject remoteTile = null;
+
         public override void Evaluate()
         {
             Vector3 startPosition = transform.position + Vector3.up * 0.30f;
@@ -122,8 +124,42 @@ namespace Game.Units.Actions
                 simulation.GetComponent<MeshRenderer>().material.color = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Game.Player.Manager>().Color(serverRpcParams.Receive.SenderClientId);
 
                 simulation.GetComponent<NetworkObject>().Spawn();
-                simulation.GetComponent<NetworkObject>().TrySetParent(gameObject);
+                simulation.GetComponent<NetworkObject>().TrySetParent(gameObject.transform.parent);
+                remoteTile = tileDestinationGo.gameObject;
+                IsTransfering = true;
             }
+        }
+
+        private void Update()
+        {
+            if (IsServer && IsTransfering && simulation != null && remoteTile != null)
+            {
+                Units.Manager localUnit = simulation.transform.parent.GetComponentInChildren<Units.Manager>();
+                Units.Manager remoteUnit = remoteTile.GetComponentInChildren<Units.Manager>();
+                if (localUnit != null && remoteUnit != null)
+                {
+                    localUnit.health.Value += Time.deltaTime;
+                    remoteUnit.health.Value -= Time.deltaTime;
+
+                    if (localUnit.health.Value >= 1)
+                    {
+                        DestroyTransfert();
+                    }
+                } else
+                {
+                    DestroyTransfert();
+                }
+            } else
+            {
+                DestroyTransfert();
+            }
+        }
+
+        private void DestroyTransfert()
+        {
+            IsTransfering = false;
+            remoteTile = null;
+            Destroy(simulation);
         }
     }
 }
