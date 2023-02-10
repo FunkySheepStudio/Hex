@@ -15,6 +15,8 @@ namespace Game.Board
 
         public override void OnNetworkSpawn()
         {
+            NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Player.Manager>().board = gameObject;
+
             if (IsServer)
             {
                 size = Random.Range(5, 10);
@@ -63,6 +65,10 @@ namespace Game.Board
                                     tile = Spawn(starts[0], position, tilePosition).GetComponent<Tile>();
                                     tile.GetComponent<NetworkObject>().ChangeOwnership(playerId.Value);
                                     tile.type.Value = TileType.Start;
+                                    if (playerId == NetworkManager.Singleton.LocalClientId)
+                                    {
+                                        NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Player.Manager>().currentTile = tile;
+                                    }
                                 } else
                                 {
                                     tile = Spawn(paths[0], position, tilePosition).GetComponent<Tile>();

@@ -1,8 +1,7 @@
-using Game.Board;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 using Unity.Netcode;
+using Game.Board;
 
 namespace Game.Player
 {
@@ -10,15 +9,33 @@ namespace Game.Player
     {
         public List<Color> colors;
         bool move = false;
-        Vector3 moveTarget;
+        int moveIndex = 0;
+        float elapsedMove = 0;
+        List<Tile> path = new List<Tile>();
+        public GameObject board;
+        public Tile currentTile;
 
         private void Update()
         {
             if (move)
             {
-                transform.position = Vector3.Lerp(transform.position, moveTarget, Time.deltaTime);
-                if (transform.position == moveTarget)
+                elapsedMove += Time.deltaTime;
+                if (elapsedMove > 1)
+                    elapsedMove = 1;
+                transform.position = Vector3.Lerp(currentTile.transform.position, path[moveIndex].transform.position, elapsedMove);
+                if (transform.position == path[moveIndex].transform.position)
+                {
+                    currentTile = path[moveIndex];
+                    elapsedMove = 0;
+                    moveIndex += 1;
+                }
+                if (moveIndex == path.Count)
+                {
+                    path.Clear();
+                    elapsedMove = 0;
+                    moveIndex = 0;
                     move = false;
+                }
             }
         }
    
@@ -32,10 +49,9 @@ namespace Game.Player
             return colors[(int)owner];
         }
 
-        [ServerRpc]
-        public void MoveServerRpc(Vector3 target)
+        public void Move(GameObject selector)
         {
-            moveTarget = target;
+            path = board.GetComponent<Board.PathFinder>().FindPath(currentTile, selector.GetComponent<Selector.Manager>().selectedTile.GetComponent<Tile>());
             move = true;
         }
     }
